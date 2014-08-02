@@ -1,0 +1,8 @@
+{
+  "publishers": [
+    {
+      "name": "Barcelona"
+      "publications": [1,2,3,4]
+    }
+  ]
+}

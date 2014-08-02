@@ -1,4 +1,5 @@
 {
   "port": 3080,
-  "mongodb": "mongodb://localhost/bdigital_test"
+  "mongodb": "mongodb://localhost/bdigital_test",
+  "base_url": "http://localhost:3000"
 }

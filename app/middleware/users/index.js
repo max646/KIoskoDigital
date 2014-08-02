@@ -1,7 +1,7 @@
-var authenticate = require('./authenticate');
+var auth = require('./create');
 
 var users_middleware = {
-  authenticate: authenticate
+  create: auth.create,
 };
 
 module.exports = users_middleware;
