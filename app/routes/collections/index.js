@@ -30,7 +30,8 @@ collections.get('/', /*passport.authenticate('basic'),*/ mocked_user, function(r
                   id: issue.id,
                   number: issue.number,
                   title: issue.title,
-                  assets: issue.assets
+                  cover: issue.cover,
+                  main: issue.main
                 };
               })
             });

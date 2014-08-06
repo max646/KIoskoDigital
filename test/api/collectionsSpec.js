@@ -47,7 +47,8 @@ describe("/collections/main", function() {
                 id: issue._id,
                 title: issue.title,
                 number: issue.number,
-                assets: issue.assets
+                cover: issue.assets,
+                main: issue.main
               };
             })
         }, done);
