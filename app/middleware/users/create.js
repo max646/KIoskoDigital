@@ -33,10 +33,8 @@ var registerUser = function(user, password) {
  */
 var create = function(req, res, next) {
   registerUser(new User({
-    username: req.body.username,
-    dni: req.body.dni,
-    email: req.body.email
-  }), req.body.password)
+    username: req.body.user.username,
+  }), req.body.user.password)
   .done(function(user) {
     req.user = user;
     next();
