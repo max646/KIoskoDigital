@@ -1,6 +1,6 @@
 var express = require('express'),
   passport = require('passport'),
-  users = require('../../models/users'),
+  users = require('../models/users'),
   q = require('q');
 
 var collections = express.Router();

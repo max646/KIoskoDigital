@@ -1,5 +1,5 @@
 var express = require('express'),
-  usersMw = require('../../middleware/users'),
+  usersMw = require('../middleware/users'),
   passport = require('passport');
 
 var users = express.Router();
@@ -8,7 +8,7 @@ users.post('/', usersMw.create, function(req, res) {
   res.send({
     users: [
       {
-        username: req.body.username
+        username: req.body.user.username
       }
     ]
   });
