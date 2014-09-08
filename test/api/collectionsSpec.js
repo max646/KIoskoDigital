@@ -19,7 +19,7 @@ beforeEach(function(done) {
   });
 });
 
-describe("/collections/main", function() {
+describe("/collections", function() {
   beforeEach(function(done) {
     Users.create(user_mock.hashed, function() {
       Collections.create(collection_mock, function() {
@@ -33,24 +33,39 @@ describe("/collections/main", function() {
   describe('GET', function() {
     it('should return the user\'s main collection', function(done) {
       this.timeout(10000);
+      var pages = [];
       request(app)
-        .get('/collections/main')
+        .get('/collections')
         .set('Accept', 'application/json')
         .auth(user_mock.raw.username, user_mock.raw.password)
         .expect(200, {
-          collections: [{
-            id: collection_mock._id,
-            issues: collection_mock.issues
-          }],
+          collections: [
+            {
+              id: collection_mock._id,
+              issues: collection_mock.issues
+
+            }
+          ],
           issues: issues_mock.map(function(issue){
+              var page_index;
               return {
                 id: issue._id,
                 title: issue.title,
                 number: issue.number,
-                cover: issue.assets,
-                main: issue.main
+                cover: issue.cover,
+                main: issue.main,
+                pages: issue.pages.map(function(page) {
+                  page_index = page_index===undefined?0:page_index+1;
+                  var page_id = issue._id + '-' + page_index;
+                  pages.push({
+                    id: page_id,
+                    url: issue.main + '/' + page.file
+                  });
+                  return page_id;
+                })
               };
-            })
+            }),
+          pages: pages
         }, done);
     });
   });

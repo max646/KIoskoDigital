@@ -1,0 +1,10 @@
+{
+  "config": {
+    "clientId": "4549118606452782",
+    "clientSecret": "o56yQ6QqS4Fg3AR5zITZ9i0qKSAQKL1m"
+  },
+  "STATUS": {
+    "APPROVED": "approved",
+    "PENDING": "pending"
+  }
+}

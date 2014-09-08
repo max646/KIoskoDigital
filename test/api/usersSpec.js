@@ -1,4 +1,4 @@
-var chai = require('chai'),
+var
   mongoose = require('mongoose'),
   request = require('supertest'),
   Users = require('../../app/models/users'),
@@ -26,10 +26,10 @@ describe('/users', function() {
       request(app)
         .post('/users')
         .set('Accept', 'application/json')
-        .send(user_mock.raw)
+        .send({user: user_mock.raw})
         .expect(200, {
           users: [{
-            username: 'test'
+            username: user_mock.raw.username
           }]
         }, done);
     });
@@ -39,9 +39,9 @@ describe('/users', function() {
     beforeEach(createUser);
     it('Should authenticate a user', function(done) {
       request(app)
-        .get('/users/')
+        .get('/users')
         .set('Accept', 'application/json')
-        .auth('test', 'test123')
+        .auth(user_mock.raw.username, user_mock.raw.password)
         .expect(200, {
           links: {
             "users.collections": {
@@ -51,7 +51,7 @@ describe('/users', function() {
           users: [
             {
               id: '53b8c3d7d06cadd303bc49ad',
-              username: 'test',
+              username: user_mock.raw.username,
               collections: ['53b615385b1a700000e4c54b']
             }
           ]

@@ -2,27 +2,90 @@
       "_id" : "53b3791643875a10e359feee",
       "number" : "250",
       "title" : "Peron Aniversario",
-      "assets" : {
-          "cover" : "http://link.to/250/cover.png",
-          "main" : "http://link.to/250/magazine.pdf"
-      }
+      "cover" : "http://link.to/250/cover.png",
+      "main" : "http://link.to/250/magazine.pdf",
+      "pages" : [
+        {
+            "file" : "250.jpeg"
+        },
+        {
+            "file" : "250 11.jpeg"
+        },
+        {
+            "file" : "250 12.jpeg"
+        },
+        {
+            "file" : "250 13.jpeg"
+        },
+        {
+            "file" : "250 14.jpeg"
+        },
+        {
+            "file" : "250 15.jpeg"
+        },
+        {
+            "file" : "250 16.jpeg"
+        }
+    ]
     },
     {
       "_id" : "53b3792643875a10e359feef",
       "number" : "251",
       "title" : "Ortos rotos",
-      "assets" : {
-          "cover" : "http://link.to/251/cover.png",
-          "main" : "http://link.to/251/magazine.pdf"
-      }
+      "cover" : "http://link.to/251/cover.png",
+      "main" : "http://link.to/251/magazine.pdf",
+      "pages" : [
+        {
+            "file" : "251.jpeg"
+        },
+        {
+            "file" : "251 11.jpeg"
+        },
+        {
+            "file" : "251 12.jpeg"
+        },
+        {
+            "file" : "251 13.jpeg"
+        },
+        {
+            "file" : "251 14.jpeg"
+        },
+        {
+            "file" : "251 15.jpeg"
+        },
+        {
+            "file" : "251 16.jpeg"
+        }
+    ]
     },
     {
       "_id" : "53b3795543875a10e359fef0",
       "number" : "252",
       "title" : "Vaselinha",
-      "assets" : {
-          "cover" : "http://link.to/252/cover.png",
-          "main" : "http://link.to/252/magazine.pdf"
-      }
+      "cover" : "http://link.to/252/cover.png",
+      "main" : "http://link.to/252/magazine.pdf",
+      "pages" : [
+        {
+            "file" : "251.jpeg"
+        },
+        {
+            "file" : "251 11.jpeg"
+        },
+        {
+            "file" : "251 12.jpeg"
+        },
+        {
+            "file" : "251 13.jpeg"
+        },
+        {
+            "file" : "251 14.jpeg"
+        },
+        {
+            "file" : "251 15.jpeg"
+        },
+        {
+            "file" : "251 16.jpeg"
+        }
+    ]
   }
 ]

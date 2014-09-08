@@ -35,4 +35,14 @@ describe('The Users model', function() {
         });
     });
   });
+
+  it('should be able to find its active subscriptions', function(done) {
+    Users.findOne({
+    }, function(err, user) {
+      q.when(user.findActiveSubscriptions())
+        .done(function(subscriptions) {
+          expect(subscriptions).to.have.length(2);
+        });
+    });
+  });
 });

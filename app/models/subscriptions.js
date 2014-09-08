@@ -4,11 +4,11 @@ var Schema = mongoose.Schema;
 
 var SubscriptionSchema = new Schema({
   owner: Schema.Types.ObjectId,
-  from: {
+  createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    expires: '90 days'
   },
-  to: Date
 });
 
 module.exports = {

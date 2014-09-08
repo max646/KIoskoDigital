@@ -18,7 +18,11 @@ collections.get('/', passport.authenticate('basic'), function(req, res) {
         }
         q.when(collection.findIssues())
           .done(function(issues) {
+              var pages = [];
               res.send({
+                user: {
+                  username: req.user.username
+                },
                 collections: [
                   {
                     id: collection.id,
@@ -26,14 +30,26 @@ collections.get('/', passport.authenticate('basic'), function(req, res) {
                   }
                 ],
                 issues: issues.map(function(issue) {
+                  var page_count = 0;
                   return {
                     id: issue.id,
                     number: issue.number,
                     title: issue.title,
                     cover: issue.cover,
-                    main: issue.main
+                    main: issue.main,
+                    pages: issue.pages.map(function(page) {
+                      var page_id = issue.id + "-" + page_count;
+                      pages.push({
+                        id: page_id,
+                        url: issue.main + "/" + page.file
+                      });
+                      page_count++;
+
+                      return page_id;
+                    })
                   };
-                })
+                }),
+                pages: pages
               });
           });
       });

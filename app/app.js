@@ -4,18 +4,29 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var eson = require('eson');
 var mongoose = require('mongoose');
+var morgan = require('morgan');
+var cors = require('cors');
+var app = module.exports = express();
+
+app.use(cors());
+
+var server = require('http').Server();
+var io = require('socket.io')(server);
+app.set('io', io);
+server.listen(3001);
+
+// routes
 var users = require('./routes/users');
 var collections = require('./routes/collections');
-var morgan = require('morgan'),
- cors = require('cors');
-
-var app = module.exports = express();
+var subscriptions = require('./routes/subscriptions');
+var payments = require('./routes/payments');
+var issues = require('./routes/issues');
 
 
 var config_file = __dirname + '/config/' + app.get('env') + '.json';
 var config = eson().use(eson.args()).read(config_file);
 
-app.set('base_url', config.base_url);
+app.set(config);
 
 mongoose.connect(config.mongodb);
 var db = mongoose.connection;
@@ -29,10 +40,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(cors());
+
+
 
 app.use('/users', users);
 app.use('/collections', collections);
+app.use('/issues', issues);
+app.use('/subscriptions', subscriptions);
+app.use('/payments', payments);
 
 app.get('/', function(req, res) {
   res.send(200, {
@@ -47,3 +62,5 @@ db.once('open', function() {
     console.log("Listening on port: " + config.port);
   });
 });
+
+module.exports = app;
