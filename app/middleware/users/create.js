@@ -19,6 +19,7 @@ var registerUser = function(user, password) {
       if (err) {
         defer.reject(err);
       } else {
+        user.createCollection();
         defer.resolve(user);
       }
   });

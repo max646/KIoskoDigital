@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var cors = require('cors');
 var app = module.exports = express();
+var MP = require('mercadopago');
+var MP_CONST = require('./config/mercadopago');
 
 app.use(cors());
 
@@ -14,6 +16,10 @@ var server = require('http').Server();
 var io = require('socket.io')(server);
 app.set('io', io);
 server.listen(3001);
+
+app.set('mp', new MP(MP_CONST.config.clientId, MP_CONST.config.clientSecret));
+
+app.set('first_issue', '53b3791643875a10e359feee');
 
 // routes
 var users = require('./routes/users');

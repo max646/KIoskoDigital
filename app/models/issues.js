@@ -11,6 +11,7 @@ var IssueSchema = new Schema({
   number: String,
   cover: String,
   main: String,
+  publication: Schema.Types.ObjectId,
   published_on: {type: Date, default: Date.now},
   pages: [Pages]
 });

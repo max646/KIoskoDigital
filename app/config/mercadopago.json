@@ -5,6 +5,7 @@
   },
   "STATUS": {
     "APPROVED": "approved",
-    "PENDING": "pending"
+    "PENDING": "pending",
+    "AUTHORIZED": "authorized"
   }
 }

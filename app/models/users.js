@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+  app = require('../app'),
   q = require('q'),
   Collection = require('./collections').model,
   Subscription = require('./subscriptions').model,
@@ -20,6 +21,18 @@ UserSchema.plugin(passportLocalMongoose);
 UserSchema.methods.addSubscription = function(duration) {
   var new_subscription = new Subsciption();
 }
+
+UserSchema.methods.createCollection = function() {
+  var that = this;
+  return Collection.create({
+   owner: this._id,
+   issues: [app.get('first_issue')]
+  }, function(err, collection) {
+    console.log(err);
+    that.collections.push(collection._id);
+     that.save();
+  });
+};
 
 UserSchema.methods.findSubscription = function() {
   var defer = q.defer();
@@ -89,8 +102,6 @@ UserSchema.methods.findIssue = function(issue_id) {
           return true;
         }
       });
-
-    //  defer.resolve(false);
     }
   })
 

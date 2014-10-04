@@ -2,6 +2,7 @@
   "port": 3000,
   "mongodb": "mongodb://localhost/bdigital",
   "base_url": "http://localhost:3000",
+  "first_issue": "",
   "mercadopago": {
     "client_id": "4549118606452782",
     "client_secret": "o56yQ6QqS4Fg3AR5zITZ9i0qKSAQKL1m",

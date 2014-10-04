@@ -22,7 +22,7 @@ afterEach(cleanUsers);
 
 describe('/users', function() {
   describe('POST', function() {
-    it('Should create a new user', function(done) {
+    it('should create a new user', function(done) {
       request(app)
         .post('/users')
         .set('Accept', 'application/json')
@@ -33,11 +33,14 @@ describe('/users', function() {
           }]
         }, done);
     });
+
+    it('should return an error if the user exists', function(done) {
+    });
   });
 
   describe('GET', function() {
     beforeEach(createUser);
-    it('Should authenticate a user', function(done) {
+    it('should authenticate a user', function(done) {
       request(app)
         .get('/users')
         .set('Accept', 'application/json')

@@ -5,7 +5,8 @@ var Issue = require('./issues').model;
 var Schema = mongoose.Schema;
 
 var CollectionSchema = new Schema({
-  issues: [Schema.Types.ObjectId]
+  issues: [Schema.Types.ObjectId],
+  Owner: Schema.Types.ObjectId
 });
 
 CollectionSchema.methods.findIssues = function() {
