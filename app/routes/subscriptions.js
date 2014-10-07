@@ -10,6 +10,6 @@ var mp = app.get('mp');
 
 mp.sandboxMode(true);
 
-subscriptions.get('/:id', passport.authenticate('basic'), check_subscription, create_preference);
+subscriptions.get('/', passport.authenticate('basic'), check_subscription, create_preference);
 
 module.exports = subscriptions;

@@ -9,7 +9,6 @@ Issues.get('/:id', passport.authenticate('basic'),function(req, res) {
     .done(function(issue) {
       var pages = [];
       var page_count = 0;
-      console.log(issue);
       res.send({
           issue: {
               id: issue.id,

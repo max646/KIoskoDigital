@@ -35,20 +35,10 @@ UserSchema.methods.createCollection = function() {
 };
 
 UserSchema.methods.findSubscription = function() {
-  var defer = q.defer();
-
-  Subscription.findOne({
+  return Subscription.findOne({
     owner: this._id
-  }, function(err, subscription) {
-    if (err) {
-      defer.reject(err);
-    } else {
-      defer.resolve(subscription);
-    }
   });
-
-  return defer.promise;
-}
+};
 
 UserSchema.methods.findCollections = function() {
   var defer = q.defer();

@@ -10,9 +10,14 @@ module.exports = function(req, res, next) {
             active: subscription.active,
           }
         });
-        return;
+      } else {
+        res.send({
+          subscription: {
+            id: 0,
+            active: false
+          }
+        });
       }
-      
-      next();
+
   });
 };
