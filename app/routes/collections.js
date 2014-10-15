@@ -37,11 +37,12 @@ collections.get('/', passport.authenticate('basic'), function(req, res) {
                     title: issue.title,
                     cover: issue.cover,
                     main: issue.main,
-                    pages: issue.pages.map(function(page) {
+                    pages: issue.pages.map(function(page, index) {
                       var page_id = issue.id + "-" + page_count;
                       pages.push({
                         id: page_id,
-                        url: issue.main + "/" + page.file
+                        url: issue.main + "/" + page.file,
+                        number: index
                       });
                       page_count++;
 
