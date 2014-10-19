@@ -24,11 +24,12 @@ var create_mp_preference = function(params) {
 		 "quantity": 1,
 	   "unit_price": params.price
 	 }],
+  "back_url": 'http://revisbarcelona.com:8083',
 	 "payer": {
 		"email": params.email,
 	 },
-  }
-}
+  };
+};
 
 var create_recurrent_payment = function(params) {
   console.log(params);
@@ -42,7 +43,7 @@ var create_recurrent_payment = function(params) {
         "transaction_amount": params.price,
         "currency_id": "ARS"
     }
-  }
+  };
 };
 
 module.exports = function(req, res) {
@@ -70,7 +71,6 @@ module.exports = function(req, res) {
       }
     });
   } else {
-    console.log('nono');
     mp.createPreference(create_mp_preference(options), function(err, data) {
       console.log(data.response.items[0]);
       if (err) {
