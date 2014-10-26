@@ -3,9 +3,11 @@ var express = require('express'),
   users = require('../models/users'),
   q = require('q');
 
+var isAuthenticated = require('../middleware/auth/passport');
+
 var collections = express.Router();
 
-collections.get('/', passport.authenticate('basic'), function(req, res) {
+collections.get('/', isAuthenticated, function(req, res) {
   if (req.user) {
     q.when(req.user.findMainCollection())
       .done(function(collection) {

@@ -19,33 +19,32 @@ app.set('mp', new MP(MP_CONST.config.clientId, MP_CONST.config.clientSecret));
 
 app.set('first_issue', '53b3791643875a10e359feee');
 
-// routes
+var config_file = __dirname + '/config/' + app.get('env') + '.json';
+var config = eson().use(eson.args()).read(config_file);
+
+app.set('config', config);
+
+// Routes
 var users = require('./routes/users');
 var collections = require('./routes/collections');
 var subscriptions = require('./routes/subscriptions');
 var payments = require('./routes/payments');
 var issues = require('./routes/issues');
 
-
-var config_file = __dirname + '/config/' + app.get('env') + '.json';
-var config = eson().use(eson.args()).read(config_file);
-
-app.set(config);
-
 mongoose.connect(config.mongodb);
 var db = mongoose.connection;
 
-app.use(morgan());
+app.use(morgan('dev'));
 app.use(passport.initialize());
 
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.set('Content-Type', 'application/json');
   next();
 });
-
-
-
 
 app.use('/users', users);
 app.use('/collections', collections);

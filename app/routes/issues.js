@@ -1,12 +1,17 @@
 var express = require('express');
 var passport = require('passport');
+var isAuthenticated = require('../middleware/auth/passport');
 var q = require('q');
 
 var Issues = express.Router();
 
-Issues.get('/:id', passport.authenticate('basic'),function(req, res) {
+Issues.get('/:id', isAuthenticated, function(req, res) {
   q.when(req.user.findIssue(req.params.id))
-    .done(function(issue) {
+    .done(function(err, issue) {
+      if (err) {
+        res.send([]);
+        return;
+      }
       var pages = [];
       var page_count = 0;
       res.send({

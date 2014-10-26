@@ -1,5 +1,6 @@
 var express = require('express'),
   usersMw = require('../middleware/users'),
+  isAuthenticated = require('../middleware/auth/passport');
   passport = require('passport');
 
 var users = express.Router();
@@ -8,22 +9,16 @@ users.post('/', usersMw.create, function(req, res) {
   res.send({
     users: [
       {
-        username: req.body.user.username
+        username: req.body.username
       }
     ]
   });
 });
 
-users.get('/', passport.authenticate('basic'), function(req, res) {
+users.get('/', isAuthenticated, function(req, res) {
   res.send({
-    links: {
-      'users.collections': {
-        href: 'http://api.com/users/{users.id}/collections/{collections.id}'
-      }
-    },
     users: [
       {
-        id: req.user.id,
         username: req.user.username,
         collections: req.user.collections
       }

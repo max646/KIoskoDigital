@@ -1,10 +1,6 @@
 var q = require('q'),
-  User = require('../../models/users');
+User = require('../../models/users');
 
-/*
- * Registers a new user.
- * @returns {promise} the user created.
- */
 var registerUser = function(user, password) {
   var defer = q.defer();
   User.register(user, password,
@@ -15,17 +11,13 @@ var registerUser = function(user, password) {
         user.createCollection();
         defer.resolve(user);
       }
-  });
+    });
 
   return defer.promise;
 };
 
-/**
- * Creates a new user and stores its data on req._rdigital.user
- *
- * @returns req._rdigital.user
- */
 var create = function(req, res, next) {
+
   registerUser(new User({
     username: req.body.user.username,
   }), req.body.user.password)
@@ -35,7 +27,7 @@ var create = function(req, res, next) {
   });
 };
 
-
 module.exports = {
   create: create
 };
+

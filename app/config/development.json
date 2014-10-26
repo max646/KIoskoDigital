@@ -7,5 +7,9 @@
     "client_id": "4549118606452782",
     "client_secret": "o56yQ6QqS4Fg3AR5zITZ9i0qKSAQKL1m",
     "init_point": "sandbox_init_point"
+  },
+  "facebook" : {
+    "CLIENT_ID": "286966254835786",
+    "CLIENT_SECRET": "d24c03a5e79cd311d5209e6b62e5b367"
   }
 }

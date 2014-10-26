@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
   bcrypt = require('bcrypt-nodejs'),
   Collection = require('./collections').model,
   Subscription = require('./subscriptions').model,
+  passportLocalMongoose = require('passport-local-mongoose'),
   Issues = require('./issues.js').model;
 
 var Schema = mongoose.Schema;
@@ -14,13 +15,14 @@ var UserSchema = new Schema({
     required: true,
     unique: true
   },
-  password: {
-    type: String,
-    require: true
-  },
+  password: String,
+  facebook_id: String,
   collections: [Schema.Types.ObjectId]
 });
 
+UserSchema.plugin(passportLocalMongoose);
+
+/*
 UserSchema.pre('save', function(cb) {
   var user = this;
 
@@ -36,6 +38,25 @@ UserSchema.pre('save', function(cb) {
     });
   });
 });
+*/
+
+UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
+  return this.findOne({
+    facebook_id: args.profile.id
+  }, function(err, user) {
+    if (err) {cb(err);}
+    if (user) {
+      cb(null, user);
+    } else {
+      this.create({
+        username: args.profile._json.email,
+        facebook_id: args.profile.id
+      }, function(err, user) {
+        cb(user);
+      });
+  }
+  }.bind(this));
+};
 
 UserSchema.methods.verifyPassword = function(password, cb) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
