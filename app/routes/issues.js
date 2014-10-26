@@ -8,7 +8,7 @@ var Issues = express.Router();
 Issues.get('/:id', isAuthenticated, function(req, res) {
   q.when(req.user.findIssue(req.params.id))
     .done(function(err, issue) {
-      if (err) {
+      if (err || !issue) {
         res.send([]);
         return;
       }

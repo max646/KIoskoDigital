@@ -44,15 +44,26 @@ UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
   return this.findOne({
     facebook_id: args.profile.id
   }, function(err, user) {
+
     if (err) {cb(err);}
     if (user) {
       cb(null, user);
     } else {
-      this.create({
-        username: args.profile._json.email,
-        facebook_id: args.profile.id
+      this.findOne({
+        username: args.profile._json.email
       }, function(err, user) {
-        cb(user);
+        if (user) {
+          user.facebook_id = args.profile.id;
+          user.save();
+          cb(null, user);
+        } else {
+          this.create({
+            username: args.profile._json.email,
+            facebook_id: args.profile.id
+          }, function(err, user) {
+            cb(err, user);
+          });
+        }
       });
   }
   }.bind(this));

@@ -13,6 +13,7 @@ passport.use(new FacebookTokenStrategy({
   }, function(accessToken, refreshToken, profile, done) {
     User.findOrCreateByFacebook({ profile: profile }, function (err, user) {
       console.log('eso', user);
+      console.log(err);
       return done(err, user);
     });
 }));
