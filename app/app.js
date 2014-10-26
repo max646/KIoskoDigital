@@ -13,8 +13,6 @@ var MP_CONST = require('./config/mercadopago');
 app.use(cors());
 
 var server = require('http').Server();
-var io = require('socket.io')(server);
-app.set('io', io);
 server.listen(3001);
 
 app.set('mp', new MP(MP_CONST.config.clientId, MP_CONST.config.clientSecret));

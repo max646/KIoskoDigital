@@ -1,12 +1,5 @@
 var q = require('q'),
-  passport = require('passport'),
-  DigestStrategy = require('passport-http').BasicStrategy,
   User = require('../../models/users');
-
-passport.use(new DigestStrategy({qop: 'auth'}, User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 /*
  * Registers a new user.

@@ -1,26 +1,48 @@
 var mongoose = require('mongoose'),
   app = require('../app'),
   q = require('q'),
+  bcrypt = require('bcrypt-nodejs'),
   Collection = require('./collections').model,
   Subscription = require('./subscriptions').model,
-  Issues = require('./issues.js').model,
-  passportLocalMongoose = require('passport-local-mongoose');
+  Issues = require('./issues.js').model;
 
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    require: true
   },
   collections: [Schema.Types.ObjectId]
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.pre('save', function(cb) {
+  var user = this;
 
-UserSchema.methods.addSubscription = function(duration) {
-  var new_subscription = new Subsciption();
-}
+  if (!user.isModified('password')) return cb();
+
+  bcrypt.genSalt(5, function(err, salt) {
+    if (err) return cb(err);
+
+    bcrypt.hash(user.password, salt, null, function(err, hash) {
+      if (err) return cb(err);
+      user.password = hash;
+      cb();
+    });
+  });
+});
+
+UserSchema.methods.verifyPassword = function(password, cb) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
 
 UserSchema.methods.createCollection = function() {
   var that = this;
@@ -81,7 +103,7 @@ UserSchema.methods.findIssue = function(issue_id) {
               _id: issue
             }, function(err, issue) {
               defer.resolve(issue);
-            })
+            });
             return false;
           }
           return true;
@@ -93,10 +115,10 @@ UserSchema.methods.findIssue = function(issue_id) {
         }
       });
     }
-  })
+  });
 
   return defer.promise;
-}
+};
 
 UserSchema.methods.findMainCollection = function() {
   var defer = q.defer();
