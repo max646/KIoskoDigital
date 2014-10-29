@@ -17,28 +17,11 @@ var UserSchema = new Schema({
   },
   password: String,
   facebook_id: String,
+  google_id: String,
   collections: [Schema.Types.ObjectId]
 });
 
 UserSchema.plugin(passportLocalMongoose);
-
-/*
-UserSchema.pre('save', function(cb) {
-  var user = this;
-
-  if (!user.isModified('password')) return cb();
-
-  bcrypt.genSalt(5, function(err, salt) {
-    if (err) return cb(err);
-
-    bcrypt.hash(user.password, salt, null, function(err, hash) {
-      if (err) return cb(err);
-      user.password = hash;
-      cb();
-    });
-  });
-});
-*/
 
 UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
   return this.findOne({
@@ -57,17 +40,50 @@ UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
           user.save();
           cb(null, user);
         } else {
+          console.log(args.profile);
           this.create({
             username: args.profile._json.email,
             facebook_id: args.profile.id
           }, function(err, user) {
+            console.log(err);
+            user.createCollection();
             cb(err, user);
           });
         }
-      });
+      }.bind(this));
   }
   }.bind(this));
 };
+
+UserSchema.statics.findOrCreateByGoogle = function(args, cb) {
+  return this.findOne({
+    google_id: args.profile.id
+  }, function(err, user) {
+    if (err) {cb(err);}
+    if (user) {
+      cb(null, user);
+    } else {
+      this.findOne({
+        username: args.profile.email
+      }, function(err, user) {
+        if (user) {
+          user.google_id = args.profile.id;
+          user.save();
+          cb(null, user);
+        } else {
+          this.create({
+            username: args.profile.email,
+            google_id: args.profile.id
+          }, function(err, user) {
+            user.createCollection();
+            cb(err, user);
+          });
+        }
+      }.bind(this));
+  }
+  }.bind(this));
+};
+
 
 UserSchema.methods.verifyPassword = function(password, cb) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
