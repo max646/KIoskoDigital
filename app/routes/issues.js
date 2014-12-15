@@ -1,6 +1,6 @@
 var express = require('express');
 var passport = require('passport');
-var isAuthenticated = require('../middleware/auth/passport');
+var isAuthenticated = require('../middleware/auth/authorize');
 var q = require('q');
 
 var Issues = express.Router();

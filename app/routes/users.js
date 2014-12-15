@@ -1,6 +1,6 @@
 var express = require('express'),
   usersMw = require('../middleware/users'),
-  isAuthenticated = require('../middleware/auth/passport');
+  isAuthenticated = require('../middleware/auth/authorize'),
   passport = require('passport');
 
 var users = express.Router();

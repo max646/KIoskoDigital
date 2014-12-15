@@ -1,7 +1,6 @@
 var Users = require('../../app/models/users'),
     user_mock = require('../mocks/user');
 
-
 var create = function(cb) {
   Users.create(user_mock.hashed, cb);
 };

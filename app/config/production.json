@@ -1,11 +1,11 @@
 {
   "port": 3000,
-  "mongodb": "mongodb://localhost/bdigital",
+  "mongodb": "mongodb://127.0.0.1/bdigital",
   "base_url": "http://localhost:3000",
   "mercadopago": {
-    "client_id": "4549118606452782",
-    "client_secret": "o56yQ6QqS4Fg3AR5zITZ9i0qKSAQKL1m",
-    "init_point": "sandbox_init_point"
+    "client_id": "1934344364617588",
+    "client_secret": "NZMWyv41Vc9oNXxS9zAWCr6xR8XUVstd",
+    "init_point": "init_point"
   },
   "facebook" : {
     "client_id": "286966254835786",

@@ -17,10 +17,11 @@ var registerUser = function(user, password) {
 };
 
 var create = function(req, res, next) {
-
+  console.log(req.body);
+  console.log(req.param('username'));
   registerUser(new User({
-    username: req.body.user.username,
-  }), req.body.user.password)
+    username: req.param('username'),
+  }), req.param('password'))
   .done(function(user) {
     req.user = user;
     next();
@@ -30,4 +31,3 @@ var create = function(req, res, next) {
 module.exports = {
   create: create
 };
-

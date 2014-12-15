@@ -1,16 +1,18 @@
 var passport = require('passport'),
-    BasicStrategy = require('passport-http').BasicStrategy,
     FacebookTokenStrategy = require('passport-facebook-token').Strategy,
+    BasicStrategy = require('passport-http').BasicStrategy,
     GooglePlusStrategy = require('passport-google-plus'),
-    User = require('../../models/users');
+    mongoose = require('mongoose'),
+    UserSchema = require('../../models/Users'),
+    User = mongoose.model('user', UserSchema);
 
 var app = require('../../app');
 
 passport.use(new BasicStrategy(User.authenticate()));
 
 passport.use(new FacebookTokenStrategy({
-    clientID: app.get('config').facebook.CLIENT_ID,
-    clientSecret:  app.get('config').facebook.CLIENT_SECRET,
+    clientID: app.get('config').facebook.client_id,
+    clientSecret:  app.get('config').facebook.client_secret,
   }, function(accessToken, refreshToken, profile, done) {
     User.findOrCreateByFacebook({ profile: profile }, function (err, user) {
       return done(err, user);
@@ -28,16 +30,20 @@ passport.use(new GooglePlusStrategy({
 }));
 
 function isAuthenticated(req, res, next) {
-  console.log(req.headers);
-  var auth = req.headers.authorization.split(' ');
-  if (auth[0] === 'Facebook') {
-    req.body.access_token = auth[1];
-    passport.authenticate('facebook-token', {session: false})(req, res, next);
-  } else if (auth[0] === 'Google') {
-    req.body.code = auth[1];
-    passport.authenticate('google', {session: false})(req, res, next);
-  } else {
-    passport.authenticate('basic', {session: false})(req, res, next);
+  try {
+    var auth = req.headers.authorization.split(' ');
+    if (auth[0] === 'Facebook') {
+      req.body.access_token = auth[1];
+      passport.authenticate('facebook-token', {session: false})(req, res, next);
+    } else if (auth[0] === 'Google') {
+      req.body.code = auth[1];
+      passport.authenticate('google', {session: false})(req, res, next);
+    } else {
+      passport.authenticate('basic', {session: false})(req, res, next);
+    }
+  } catch (e) {
+    console.log('!');
+    res.send(503);
   }
 }
 

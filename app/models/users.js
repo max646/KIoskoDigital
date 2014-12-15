@@ -27,7 +27,6 @@ UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
   return this.findOne({
     facebook_id: args.profile.id
   }, function(err, user) {
-
     if (err) {cb(err);}
     if (user) {
       cb(null, user);
@@ -183,4 +182,4 @@ UserSchema.methods.findMainCollection = function() {
   return defer.promise;
 };
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = UserSchema;

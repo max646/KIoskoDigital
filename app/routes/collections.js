@@ -3,7 +3,7 @@ var express = require('express'),
   users = require('../models/users'),
   q = require('q');
 
-var isAuthenticated = require('../middleware/auth/passport');
+var isAuthenticated = require('../middleware/auth/authorize');
 
 var collections = express.Router();
 

@@ -1,8 +1,4 @@
 {
-  "config": {
-    "clientId": "1934344364617588",
-    "clientSecret": "NZMWyv41Vc9oNXxS9zAWCr6xR8XUVstd"
-  },
   "STATUS": {
     "APPROVED": "approved",
     "PENDING": "pending",
