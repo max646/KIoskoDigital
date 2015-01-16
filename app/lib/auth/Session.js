@@ -1,9 +1,7 @@
 var RSVP = require('rsvp');
 var mongoose = require('mongoose');
 var uuid = require('node-uuid');
-var SessionSchema = require('../../models/session');
-
-var sessionModel = mongoose.model('session', SessionSchema);
+var sessionModel = require('../../models/session').model;
 
 module.exports = {
   /*

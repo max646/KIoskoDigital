@@ -18,4 +18,15 @@ var SessionSchema = new Schema({
   }
 });
 
-module.exports = SessionSchema;
+var SessionModel = null;
+
+try {
+  SessionModel = mongoose.model('session')
+} catch (err) {
+  SessionModel = mongoose.model('session', SessionSchema)
+}
+
+module.exports = {
+  schema: SessionSchema,
+  model: SessionModel
+};

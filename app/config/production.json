@@ -10,5 +10,10 @@
   "facebook" : {
     "client_id": "286966254835786",
     "client_secret": "d24c03a5e79cd311d5209e6b62e5b367"
+  },
+  "google" : {
+    "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
+    "client_secret": "eFAb4d220nR6BzVO6vmugeJM",
+    "redirectUri": "http://localhost:4200"
   }
 }

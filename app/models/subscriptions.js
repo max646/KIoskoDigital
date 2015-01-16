@@ -11,7 +11,15 @@ var SubscriptionSchema = new Schema({
   }
 });
 
+var SubscriptionModel = null;
+
+try {
+  SubscriptionModel = mongoose.model('subscription')
+} catch (err) {
+  SubscriptionModel = mongoose.model('subscription', SubscriptionSchema)
+}
+
 module.exports = {
-  model: mongoose.model('subscription', SubscriptionSchema),
+  model: SubscriptionModel,
   schema: SubscriptionSchema
 };

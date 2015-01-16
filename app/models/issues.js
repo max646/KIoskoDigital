@@ -16,7 +16,15 @@ var IssueSchema = new Schema({
   pages: [Pages]
 });
 
+var IssueModel = null;
+
+try {
+  IssueModel = mongoose.model('issue')
+} catch (err) {
+  IssueModel = mongoose.model('issue', IssueSchema)
+}
+
 module.exports =  {
   schema: IssueSchema,
-  model: mongoose.model('issue', IssueSchema)
+  model: IssueModel
 };

@@ -9,7 +9,7 @@ users.post('/', usersMw.create, function(req, res) {
   res.send({
     users: [
       {
-        username: req.body.username
+        username: req.body.user.username
       }
     ]
   });

@@ -26,7 +26,15 @@ CollectionSchema.methods.findIssues = function() {
   return defer.promise;
 };
 
+var CollectionModel = null;
+
+try {
+  CollectionModel = mongoose.model('collection')
+} catch (err) {
+  CollectionModel = mongoose.model('collection', CollectionSchema)
+}
+
 module.exports = {
-  model: mongoose.model('collection', CollectionSchema),
+  model: CollectionModel,
   schema: CollectionSchema
 };

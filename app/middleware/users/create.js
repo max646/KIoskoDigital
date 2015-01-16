@@ -1,5 +1,5 @@
 var q = require('q'),
-User = require('../../models/users');
+User = require('../../models/users').model;
 
 var registerUser = function(user, password) {
   var defer = q.defer();
@@ -17,11 +17,9 @@ var registerUser = function(user, password) {
 };
 
 var create = function(req, res, next) {
-  console.log(req.body);
-  console.log(req.param('username'));
   registerUser(new User({
-    username: req.param('username'),
-  }), req.param('password'))
+    username: req.body.user.username
+  }), req.body.user.password)
   .done(function(user) {
     req.user = user;
     next();

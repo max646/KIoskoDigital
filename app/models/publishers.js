@@ -8,7 +8,15 @@ var PublisherSchema = new Schema({
   publications: [Schema.Types.ObjectId]
 });
 
+var PublisherModel = null;
+
+try {
+  PublisherModel = mongoose.model('publisher')
+} catch (err) {
+  PublisherModel = mongoose.model('publisher', PublisherSchema)
+}
+
 module.exports = {
-  model: mongoose.model('publisher', PublisherSchema),
+  model: PublisherModel,
   schema: PublisherSchema
 };

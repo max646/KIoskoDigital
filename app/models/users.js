@@ -1,11 +1,11 @@
 var mongoose = require('mongoose'),
-  app = require('../app'),
-  q = require('q'),
-  bcrypt = require('bcrypt-nodejs'),
-  Collection = require('./collections').model,
-  Subscription = require('./subscriptions').model,
-  passportLocalMongoose = require('passport-local-mongoose'),
-  Issues = require('./issues.js').model;
+    app = require('../app'),
+    q = require('q'),
+    bcrypt = require('bcrypt-nodejs'),
+    Collection = require('./collections').model,
+    Subscription = require('./subscriptions').model,
+    passportLocalMongoose = require('passport-local-mongoose'),
+    Issues = require('./issues').model;
 
 var Schema = mongoose.Schema;
 
@@ -50,7 +50,7 @@ UserSchema.statics.findOrCreateByFacebook = function(args, cb) {
           });
         }
       }.bind(this));
-  }
+    }
   }.bind(this));
 };
 
@@ -71,7 +71,7 @@ UserSchema.statics.findOrCreateByGoogle = function(args, cb) {
           cb(null, user);
         } else {
           this.create({
-            username: args.profile.email,
+            username: args.profile.emails[0].value,
             google_id: args.profile.id
           }, function(err, user) {
             user.createCollection();
@@ -79,7 +79,7 @@ UserSchema.statics.findOrCreateByGoogle = function(args, cb) {
           });
         }
       }.bind(this));
-  }
+    }
   }.bind(this));
 };
 
@@ -94,12 +94,12 @@ UserSchema.methods.verifyPassword = function(password, cb) {
 UserSchema.methods.createCollection = function() {
   var that = this;
   return Collection.create({
-   owner: this._id,
-   issues: [app.get('first_issue')]
+    owner: this._id,
+    issues: [app.get('first_issue')]
   }, function(err, collection) {
     console.log(err);
     that.collections.push(collection._id);
-     that.save();
+    that.save();
   });
 };
 
@@ -116,13 +116,13 @@ UserSchema.methods.findCollections = function() {
     _id: {
       $in: this.collections
     }
-    }, function(err, collections) {
-      if (err) {
-        defer.reject(err);
-      } else {
-        defer.resolve(collections);
-      }
-    });
+  }, function(err, collections) {
+    if (err) {
+      defer.reject(err);
+    } else {
+      defer.resolve(collections);
+    }
+  });
 
   return defer.promise;
 };
@@ -182,4 +182,15 @@ UserSchema.methods.findMainCollection = function() {
   return defer.promise;
 };
 
-module.exports = UserSchema;
+var UserModel = null;
+
+try {
+  UserModel = mongoose.model('user');
+} catch (err) {
+  UserModel = mongoose.model('user', UserSchema);
+}
+
+module.exports = {
+  model: UserModel,
+  schema: UserSchema
+};

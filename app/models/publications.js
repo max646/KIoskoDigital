@@ -21,7 +21,15 @@ PublicationSchema.methods.findSubscriptions = function _findSubscriptions() {
   });
 };
 
+var PublicationModel = null;
+
+try {
+  PublicationModel = mongoose.model('publication')
+} catch (err) {
+  PublicationModel = mongoose.model('publication', PublicationSchema)
+}
+
 module.exports = {
-  model: mongoose.model('publication', PublicationSchema),
+  model: PublicationModel,
   schema: PublicationSchema
 };
