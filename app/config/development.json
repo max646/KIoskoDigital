@@ -3,9 +3,15 @@
   "mongodb": "mongodb://localhost/bdigital",
   "base_url": "http://localhost:3000",
   "mercadopago": {
-    "client_id": "4549118606452782",
-    "client_secret": "o56yQ6QqS4Fg3AR5zITZ9i0qKSAQKL1m",
-    "init_point": "sandbox_init_point"
+    "client_id": "2188622140377325",
+    "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
+    "init_point": "sandbox_init_point",
+    "back_urls": {
+      "success": "http://localhost:4200/#/collections/main",
+      "pending": "http://localhost:4200/#/collections/main",
+      "failure": "http://localhost:4200/#/collections/main"
+    },
+    "auto_return": "approved"
   },
   "facebook" : {
     "client_id": "759804940768080",

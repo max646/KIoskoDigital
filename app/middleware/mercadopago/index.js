@@ -1,8 +1,8 @@
 var MP = require('mercadopago');
-var app = require('../../app');
 
-var mp = new MP(app.get('config').mercadopago.client_id, app.get('config').mercadopago.client_secret);
-
-mp.sandboxMode(app.get('env') !== 'production');
-
-module.exports = mp;
+module.exports = function(app) {
+    var mp = new MP(app.get('config').mercadopago.client_id, app.get('config').mercadopago.client_secret);
+    mp.sandboxMode(app.get('env') !== 'production');
+    app.set('mp', mp);
+    return mp;
+};

@@ -1,11 +1,17 @@
 {
   "port": 3000,
   "mongodb": "mongodb://127.0.0.1/bdigital",
-  "base_url": "http://localhost:3000",
+  "base_url": "http://104.236.50.158:3000",
   "mercadopago": {
     "client_id": "1934344364617588",
     "client_secret": "NZMWyv41Vc9oNXxS9zAWCr6xR8XUVstd",
-    "init_point": "init_point"
+    "init_point": "init_point",
+    "back_urls": {
+      "success": "http://104.236.50.158:4200/payments/success",
+      "pending": "http://104.236.50.158:4200/payments/pending",
+      "failure": "http://104.236.50.158:4200/payments/failure"
+    },
+    "auto_return": ""
   },
   "facebook" : {
     "client_id": "286966254835786",

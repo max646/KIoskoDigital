@@ -2,6 +2,15 @@
   "STATUS": {
     "APPROVED": "approved",
     "PENDING": "pending",
-    "AUTHORIZED": "authorized"
+    "IN_PROCESS": "in_process",
+    "REJECTED": "rejected",
+    "CANCELLED": "cancelled",
+    "REFUNDED": "refunded",
+    "IN_MEDIATION": "in_mediation",
+    "CHARGED_BACK": "charged_back"
+  },
+  "OPERATION_TYPE": {
+    "REGULAR": "regular_payment",
+    "RECURRING": "recurring_payment"
   }
 }

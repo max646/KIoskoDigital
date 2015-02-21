@@ -104,9 +104,19 @@ UserSchema.methods.createCollection = function() {
 };
 
 UserSchema.methods.findSubscription = function() {
-  return Subscription.findOne({
-    owner: this._id
-  });
+    var defer = q.defer();
+
+    Subscription.findOne({
+        owner: this._id
+    }).exec(function(err, subscription) {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(subscription);
+        }
+    });
+
+    return defer.promise;
 };
 
 UserSchema.methods.findCollections = function() {

@@ -1,7 +1,7 @@
 var
   mongoose = require('mongoose'),
   request = require('supertest'),
-  Users = require('../../app/models/users'),
+  Users = require('../../app/models/users').model,
   app = require('../../app/app'),
   user_mock = require('../mocks/user');
 
@@ -17,8 +17,8 @@ var createUser = function(done) {
   test_user.save(done);
 };
 
-beforeEach(cleanUsers);
-afterEach(cleanUsers);
+//beforeEach(cleanUsers);
+//afterEach(cleanUsers);
 
 describe('/users', function() {
   describe('POST', function() {

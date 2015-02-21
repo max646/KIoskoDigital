@@ -1,4 +1,4 @@
-var Users = require('../../app/models/users'),
+var Users = require('../../app/models/users').model,
     user_mock = require('../mocks/user');
 
 var create = function(cb) {

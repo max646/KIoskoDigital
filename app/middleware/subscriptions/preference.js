@@ -1,4 +1,4 @@
-var mp = require('../mercadopago');
+var mp = require('../../app').get('mp');
 
 mp.sandboxMode(true);
 

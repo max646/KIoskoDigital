@@ -7,11 +7,13 @@ var users_helpers= require('../helpers/users');
 var user_mock = require('../mocks/user');
 
 
-beforeEach(users_helpers.create);
-afterEach(users_helpers.clean);
+
 
 describe('/token', function() {
   describe('POST', function() {
+    beforeEach(users_helpers.create);
+    //afterEach(users_helpers.clean);
+
     it('should create a token', function(done) {
       request(app)
         .post('/token')
