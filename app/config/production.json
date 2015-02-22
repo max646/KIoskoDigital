@@ -3,23 +3,23 @@
   "mongodb": "mongodb://127.0.0.1/bdigital",
   "base_url": "http://104.236.50.158:3000",
   "mercadopago": {
-    "client_id": "1934344364617588",
-    "client_secret": "NZMWyv41Vc9oNXxS9zAWCr6xR8XUVstd",
-    "init_point": "init_point",
+    "client_id": "2188622140377325",
+    "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
+    "init_point": "sandbox_init_point",
     "back_urls": {
-      "success": "http://104.236.50.158:4200/payments/success",
-      "pending": "http://104.236.50.158:4200/payments/pending",
-      "failure": "http://104.236.50.158:4200/payments/failure"
+      "success": "http://104.236.50.158:4200/#/collections/main",
+      "pending": "http://104.236.50.158:4200/#/collections/main",
+      "failure": "http://104.236.50.158:4200/#/collections/main"
     },
-    "auto_return": ""
+    "auto_return": "approved"
   },
   "facebook" : {
-    "client_id": "286966254835786",
-    "client_secret": "d24c03a5e79cd311d5209e6b62e5b367"
+    "client_id": "759804940768080",
+    "client_secret": "22841ab6ccec72f215aebea34954ee76"
   },
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
     "client_secret": "eFAb4d220nR6BzVO6vmugeJM",
-    "redirectUri": "http://localhost:4200"
+    "redirectUri": "http://104.236.50.158:4200"
   }
 }
