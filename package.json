@@ -5,7 +5,8 @@
   "main": "app/init.js",
   "scripts": {
     "test": "NODE_ENV=testing ./node_modules/istanbul/lib/cli.js cover node_modules/.bin/_mocha -- -u exports -R spec test/api/**/*.js",
-    "start": "NODE_ENV=development nodemon app"
+    "start": "NODE_ENV=production nodemon app",
+    "development": "NODE_ENV=development nodemon app"
   },
   "author": "",
   "license": "ISC",
