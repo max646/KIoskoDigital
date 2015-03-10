@@ -3,11 +3,13 @@ var config = app.get('config');
 
 module.exports = {
 
-    // params.id
-    // params.email
-    // params.picture
+    // params.title
+    // params.picture_url
     // params.description
     // params.price
+    // params.user
+    // params.payment_id
+
     regular: function(params) {
         var mp_preference = {
             "items": [{
@@ -17,7 +19,7 @@ module.exports = {
                 "picture_url": params.picture_url,
                 "description": params.description,
                 "quantity": 1,
-                "unit_price": params.price
+                "unit_price": params.price.ars
             }],
             "payer": {
                 "email": params.user.username

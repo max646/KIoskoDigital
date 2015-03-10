@@ -14,6 +14,7 @@ app.set('first_issue', '53b3791643875a10e359feee');
 app.set('config', require('./config'));
 
 require('./middleware/mercadopago')(app);
+require('./middleware/paypal')(app);
 
 app.use(morgan('dev'));
 app.use(passport.initialize());

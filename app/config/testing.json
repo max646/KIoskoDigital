@@ -1,21 +1,30 @@
 {
   "port": 3080,
-  "mongodb": "mongodb://localhost/bdigital_test",
+  "mongodb": "mongodb://localhost/bdigital",
   "base_url": "http://localhost:3000",
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
     "init_point": "sandbox_init_point",
     "back_urls": {
-      "success": "http://localhost:4200/payments/success",
-      "pending": "http://localhost:4200/payments/pending",
-      "failure": "http://localhost:4200/payments/failure"
+      "success": "http://localhost:4200/#/collections/main",
+      "pending": "http://localhost:4200/#/collections/main",
+      "failure": "http://localhost:4200/#/collections/main"
     },
     "auto_return": "approved"
   },
+  "paypal":{
+    "client_id": "",
+    "client_secret": "",
+    "mode": "sandbox",
+    "back_urls": {
+      "success": "http://localhost:4200/#/collections/main",
+      "failure": "http://localhost:4200/#/collections/main"
+    }
+  },
   "facebook" : {
-    "client_id": "286966254835786",
-    "client_secret": "d24c03a5e79cd311d5209e6b62e5b367"
+    "client_id": "759804940768080",
+    "client_secret": "22841ab6ccec72f215aebea34954ee76"
   },
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",

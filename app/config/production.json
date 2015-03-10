@@ -2,21 +2,35 @@
   "port": 3000,
   "mongodb": "mongodb://127.0.0.1/bdigital",
   "base_url": "http://104.236.50.158:3000",
+
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
     "init_point": "sandbox_init_point",
     "back_urls": {
-      "success": "http://104.236.50.158:4200/#/collections/main",
-      "pending": "http://104.236.50.158:4200/#/collections/main",
-      "failure": "http://104.236.50.158:4200/#/collections/main"
+      "success": "http://104.236.50.158:4200/#/subscriptions/subscribe",
+      "pending": "http://104.236.50.158:4200/#/subscriptions/subscribe",
+      "failure": "http://104.236.50.158:4200/#/subscriptions/subscribe"
     },
     "auto_return": "approved"
   },
+
+  "paypal":{
+    "client_id": "AW_pZWrtnZqGWzlDY07j5GeZ6ErsxE1XMdJ-an2QQNNW0sXB4-9s_b-8p1f2fp5YLaWG55xK7mBdRYdI",
+    "client_secret": "ENiC41oy9Q4rxTh_aSNAXjRNjTosBtfsf0OuKnVaQyX1YnQFj0uvb60JoH7MZj3Gm2y7Yagx0ExMF_9J",
+    "mode": "sandbox",
+    "redirect_urls": {
+      "return_url": "http://104.236.50.158:4200/#/subscriptions/subscribe",
+      "cancel_url": "http://104.236.50.158:4200/#/subscriptions/options"
+    },
+    "currency": "USD"
+  },
+
   "facebook" : {
     "client_id": "759804940768080",
     "client_secret": "22841ab6ccec72f215aebea34954ee76"
   },
+
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
     "client_secret": "eFAb4d220nR6BzVO6vmugeJM",

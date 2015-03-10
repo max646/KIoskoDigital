@@ -34,7 +34,8 @@
     "q": "^1.0.1",
     "rsvp": "^3.0.14",
     "socket.io": "^1.1.0",
-    "passport-google-oauth": "~0.1.5"
+    "passport-google-oauth": "~0.1.5",
+    "paypal-rest-sdk": "^1.5.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",

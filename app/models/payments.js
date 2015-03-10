@@ -7,6 +7,7 @@ var PaymentSchema = new Schema({
     platform: String, // possible values: mercadopago | paypal
     payment_id: String,
     preference_id: String,
+    token: String,
     status: String,
     description: String,
     created_at: {

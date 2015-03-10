@@ -1,31 +1,26 @@
 var q = require('q');
 var app = require('../../app');
-var mp = app.get('mp');
-
-var MP_CONST = require('../../config/mercadopago');
+var paypal = app.get('paypal');
 
 var Subscription = require('../../models/subscriptions').model;
 var Payment = require('../../models/payments').model;
 
 var process_payment = function(req, res) {
-
     if (!req.body.id) res.send(400, {error: 'payment not found.'});
 
-    mp.getPaymentInfo(req.body.id, function(error, data) {
-
+    paypal.payment.execute(req.body.id, { "payer_id": req.body.payer }, function (error, paypal_payment) {
         if (error) {
 
             if(app.get('env') === 'development')
                 console.log(error);
-            res.send(400, {error:"Has a error occurred processing your payment."});
+            res.send(400, {error: "Has a error occurred processing your payment."});
 
         } else {
 
             res.send(200, {status: 'OK'});
 
-            var mp_status = data.response.collection.status;
-            var status = (mp_status != MP_CONST.STATUS.APPROVED ? MP_CONST.STATUS.PENDING : MP_CONST.STATUS.APPROVED);
-            var duration = parseInt(data.response.collection.external_reference); //if duration == 0 is recurrent payment else total months
+            var status = paypal_payment.state;
+            var duration = parseInt(paypal_payment.transactions[0].item_list.items[0].sku); //if duration == 0 is recurrent payment else total months
             var expired_at = new Date();
 
             if(duration != 0) {
@@ -39,14 +34,13 @@ var process_payment = function(req, res) {
                 if (!payment) {
                     payment = new Payment({
                         payment_id: req.body.id,
-                        platform: 'mercadopago',
-                        preference_id: req.body.preference,
-                        status: mp_status,
-                        description: data.response.collection.reason,
+                        platform: 'paypal',
+                        token: req.body.token,
+                        status: status,
+                        description: paypal_payment.transactions[0].description,
                         payer: {
-                            id: data.response.collection.payer.id,
-                            email: data.response.collection.payer.email,
-                            nickname: data.response.collection.payer.nickname
+                            id: req.body.payer,
+                            email: paypal_payment.payer.payer_info.email
                         }
                     });
 
@@ -78,7 +72,6 @@ var process_payment = function(req, res) {
 
             });
         }
-
     });
 };
 

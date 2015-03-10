@@ -3,24 +3,36 @@
     "title": "Suscribirse a Revista Barcelona",
     "picture_url": "http://revisbarcelona.com:8081/296/1.jpg",
     "description": "Suscripción recurrente",
-    "price": 35
+    "price": {
+      "usd": 35,
+      "ars": 35
+    }
   },
   "3": {
     "title": "Suscribirse a Revista Barcelona por 3 meses",
     "picture_url": "http://revisbarcelona.com:8081/296/1.jpg",
-    "description": "Suscripcioón por 3 meses",
-    "price": 85
+    "description": "Suscripción por 3 meses",
+    "price": {
+      "usd": 85,
+      "ars": 85
+    }
   },
   "6": {
     "title": "Suscribirse a Revista Barcelona por 6 meses",
     "picture_url": "http://revisbarcelona.com:8081/296/1.jpg",
     "description": "Suscripción por 6 meses",
-    "price": 160
+    "price": {
+      "usd": 160,
+      "ars": 160
+    }
   },
   "12": {
     "title": "Suscribirse a Revista Barcelona por 12 meses",
     "picture_url": "http://revisbarcelona.com:8081/296/1.jpg",
     "description": "Suscripción por 12 meses",
-    "price": 320
+    "price": {
+      "usd": 320,
+      "ars": 320
+    }
   }
 }

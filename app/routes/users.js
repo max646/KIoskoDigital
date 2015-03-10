@@ -17,8 +17,9 @@ users.post('/', usersMw.create, function(req, res) {
 
 users.get('/', isAuthenticated, function(req, res) {
   res.send({
-    users: [
+    user: [
       {
+        id: req.user._id,
         username: req.user.username,
         collections: req.user.collections
       }
