@@ -11,7 +11,10 @@
       "pending": "http://localhost:4200/#/collections/main",
       "failure": "http://localhost:4200/#/collections/main"
     },
-    "auto_return": "approved"
+    "auto_return": "approved",
+    "recurrent_payment": {
+      "years_of_term": 20
+    }
   },
   "paypal":{
     "client_id": "",

@@ -1,18 +1,21 @@
 {
   "port": 3000,
   "mongodb": "mongodb://localhost/bdigital",
-  "base_url": "http://localhost:3000",
+  "base_url": "http://barcelonadigital-dev.com:3000",
 
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
     "init_point": "sandbox_init_point",
     "back_urls": {
-      "success": "http://localhost:4200/#/subscriptions/subscribe",
-      "pending": "http://localhost:4200/#/subscriptions/subscribe",
-      "failure": "http://localhost:4200/#/subscriptions/subscribe"
+      "success": "http://barcelonadigital-dev.com:4200/#/subscriptions/subscribe",
+      "pending": "http://barcelonadigital-dev.com:4200/#/subscriptions/subscribe",
+      "failure": "http://barcelonadigital-dev.com:4200/#/subscriptions/subscribe"
     },
-    "auto_return": "approved"
+    "auto_return": "approved",
+    "recurrent_payment": {
+      "years_of_term": 20
+    }
   },
 
   "paypal":{
@@ -20,8 +23,8 @@
     "client_secret": "ENiC41oy9Q4rxTh_aSNAXjRNjTosBtfsf0OuKnVaQyX1YnQFj0uvb60JoH7MZj3Gm2y7Yagx0ExMF_9J",
     "mode": "sandbox",
     "redirect_urls": {
-      "return_url": "http://localhost:4200/#/subscriptions/subscribe",
-      "cancel_url": "http://localhost:4200/#/subscriptions/options"
+      "return_url": "http://barcelonadigital-dev.com:4200/#/subscriptions/subscribe",
+      "cancel_url": "http://barcelonadigital-dev.com:4200/#/subscriptions/options"
     },
     "currency": "USD"
   },
@@ -34,6 +37,6 @@
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
     "client_secret": "eFAb4d220nR6BzVO6vmugeJM",
-    "redirectUri": "http://localhost:4200"
+    "redirectUri": "http://barcelonadigital-dev.com:4200"
   }
 }

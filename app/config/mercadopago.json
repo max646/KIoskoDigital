@@ -7,7 +7,8 @@
     "CANCELLED": "cancelled",
     "REFUNDED": "refunded",
     "IN_MEDIATION": "in_mediation",
-    "CHARGED_BACK": "charged_back"
+    "CHARGED_BACK": "charged_back",
+    "AUTHORIZED": "authorized"
   },
   "OPERATION_TYPE": {
     "REGULAR": "regular_payment",

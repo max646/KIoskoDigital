@@ -12,7 +12,10 @@
       "pending": "http://104.236.50.158:4200/#/subscriptions/subscribe",
       "failure": "http://104.236.50.158:4200/#/subscriptions/subscribe"
     },
-    "auto_return": "approved"
+    "auto_return": "approved",
+    "recurrent_payment": {
+      "years_of_term": 20
+    }
   },
 
   "paypal":{

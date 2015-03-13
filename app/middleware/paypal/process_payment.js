@@ -60,9 +60,7 @@ var process_payment = function(req, res) {
                             subscription.expired_at = expired_at;
                             subscription.duration = duration;
                             subscription.payment = payment._id;
-                            subscription.historical_payment.push({
-                                payment: payment._id
-                            });
+                            subscription.history_of_payments.push(payment._id);
 
                             subscription.save();
                         });

@@ -25,7 +25,7 @@ module.exports = function(req, res) {
     options.payment_id = payment_id;
 
     var payment_response = {
-        payment: {
+        paymentMethod: {
             id: payment_id,
             mp_payment_link: '',
             pp_payment_link: ''
@@ -33,16 +33,17 @@ module.exports = function(req, res) {
     };
 
     if (payment_id === '0') {
-
-        mp.createPreapprovalPayment(mp_preferences.recurrent(options), function(err, data) {
+        //TODO: createPreapprovalPayment contains a bug.
+        //mp.createPreapprovalPayment(mp_preferences.recurrent(options), function(err, data) {
+        mp.post("/preapproval", mp_preferences.recurrent(options), function(err, data){
 
             if (err) {
                 res.send(400, {error: 'mp recurrent: payment error'});
             } else {
                 if (config.mercadopago.init_point == "sandbox_init_point") {
-                    payment_response.payment.mp_payment_link = data.response.sandbox_init_point;
+                    payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                 } else {
-                    payment_response.payment.mp_payment_link = data.response.init_point;
+                    payment_response.paymentMethod.mp_payment_link = data.response.init_point;
                 }
 
                 // agregar aqui el pago recurrente o mensual de paypal
@@ -62,9 +63,9 @@ module.exports = function(req, res) {
             } else {
 
                 if (config.mercadopago.init_point == "sandbox_init_point") {
-                    payment_response.payment.mp_payment_link = data.response.sandbox_init_point;
+                    payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                 } else {
-                    payment_response.payment.mp_payment_link = data.response.init_point;
+                    payment_response.paymentMethod.mp_payment_link = data.response.init_point;
                 }
 
                 //create paypal payment
@@ -81,7 +82,7 @@ module.exports = function(req, res) {
                             for(var i=0; i < payment.links.length; i++) {
                                 var link = payment.links[i];
                                 if (link.method === 'REDIRECT') {
-                                    payment_response.payment.pp_payment_link = link.href;
+                                    payment_response.paymentMethod.pp_payment_link = link.href;
                                 }
                             }
 

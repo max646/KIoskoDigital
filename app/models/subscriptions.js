@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var q = require('q');
+
 var Payment = require('./payments').model;
 
 var Schema = mongoose.Schema;
@@ -19,24 +21,36 @@ var SubscriptionSchema = new Schema({
     duration: Number,
     status: String,
     payment: Schema.Types.ObjectId,
-    historical_payment: [{
-        payment: Schema.Types.ObjectId,
-        date: {
-            type: Date,
-            default: Date.now
-        }
-    }]
+    history_of_payments: [Schema.Types.ObjectId]
 });
 
-SubscriptionSchema.methods.findPayments = function() {
-    Payment.find({
-        subscription: this._id
-    }).sort({ payed_on : 'desc'}).exec(function (error, payments) {
-        if (error) return error;
-        return payments;
+SubscriptionSchema.methods.findPayment = function() {
+    var defer = q.defer();
+
+    Payment.findById(this.payment, function (err, payment) {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(payment);
+        }
     });
+
+    return defer.promise;
 };
 
+SubscriptionSchema.methods.findHistoryOfPayment = function() {
+    var defer = q.defer();
+
+    Payment.find({_id: { $in: this.history_of_payments}}, function (err, payments) {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(payments);
+        }
+    });
+
+    return defer.promise;
+};
 var SubscriptionModel = null;
 
 try {

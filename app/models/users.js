@@ -10,15 +10,24 @@ var mongoose = require('mongoose'),
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: String,
-  facebook_id: String,
-  google_id: String,
-  collections: [Schema.Types.ObjectId]
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: String,
+    facebook_id: String,
+    google_id: String,
+    collections: [Schema.Types.ObjectId],
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    modified_at: Date,
+    active: {
+        type: Boolean,
+        default: true
+    }
 });
 
 UserSchema.plugin(passportLocalMongoose);

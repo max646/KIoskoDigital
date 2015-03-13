@@ -32,24 +32,23 @@ module.exports = {
     },
 
     recurrent: function(params) {
-        var currentDate = new Date();
-        var nextMonth = new Date();
-        nextMonth.setMonth(nextMonth.getMonth()+1);
+        var startDate = new Date();
+        startDate.setHours(startDate.getHours() + 10); // temporally resolve a bug
+        var endDate = new Date();
+        endDate.setFullYear(endDate.getFullYear() + config.mercadopago.recurrent_payment.years_of_term);
         var recurrent_payment =  {
             "payer_email": params.user.username,
-            "back_url": 'http://revisbarcelona08.com:83',
+            "back_url": config.mercadopago.back_urls.success,
             "reason": params.description,
             "external_reference": params.payment_id,
             "auto_recurring": {
                 "frequency": 1,
                 "frequency_type": "months",
-                "transaction_amount": params.price,
+                "transaction_amount": params.price.ars,
                 "currency_id": "ARS",
-                "start_date": currentDate,
-                "end_date": nextMonth
-            },
-            "back_urls": config.mercadopago.back_urls,
-            "auto_return": config.mercadopago.auto_return
+                "start_date": startDate,
+                "end_date": endDate
+            }
         };
         return recurrent_payment;
     }
