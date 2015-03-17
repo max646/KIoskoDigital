@@ -2,6 +2,9 @@
   "port": 3080,
   "mongodb": "mongodb://localhost/bdigital",
   "base_url": "http://localhost:3000",
+
+  "first_issue": "53b3791643875a10e359feee",
+
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
@@ -16,6 +19,7 @@
       "years_of_term": 20
     }
   },
+
   "paypal":{
     "client_id": "",
     "client_secret": "",
@@ -25,10 +29,12 @@
       "failure": "http://localhost:4200/#/collections/main"
     }
   },
+
   "facebook" : {
     "client_id": "759804940768080",
     "client_secret": "22841ab6ccec72f215aebea34954ee76"
   },
+
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
     "client_secret": "eFAb4d220nR6BzVO6vmugeJM",

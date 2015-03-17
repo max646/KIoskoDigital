@@ -2,30 +2,44 @@ var q = require('q'),
 User = require('../../models/users').model;
 
 var registerUser = function(user, password) {
-  var defer = q.defer();
-  User.register(user, password,
-    function(err, user){
-      if (err) {
-        defer.reject(err);
-      } else {
-        user.createCollection();
-        defer.resolve(user);
-      }
+    var defer = q.defer();
+    User.register(new User({username: user}), password, function(err, user){
+        if (err) {
+            defer.reject(err);
+        } else {
+            user.createCollection();
+            defer.resolve(user);
+        }
     });
 
-  return defer.promise;
+    return defer.promise;
 };
 
-var create = function(req, res, next) {
-  registerUser(new User({
-    username: req.body.user.username
-  }), req.body.user.password)
-  .done(function(user) {
-    req.user = user;
-    next();
-  });
-};
-
-module.exports = {
-  create: create
+module.exports = function(req, res) {
+    if(!req.body.user || !req.body.user.username || !req.body.user.password) {
+        res.send(400, {error: 'The required params are empty.'});
+        return false;
+    }
+    registerUser(req.body.user.username, req.body.user.password)
+        .then(function(user){
+            res.send({
+                users: [
+                    {
+                        id: user._id,
+                        username: user.username,
+                        created_at: user.created_at,
+                        modified_at: user.modified_at,
+                        facebook_id: user.facebook_id,
+                        google_id: user.google_id,
+                        collections: user.collections,
+                        active: user.active
+                    }
+                ]
+            });
+        })
+        .fail(function (err) {
+            if(err){
+                res.send(400, {error: err.message});
+            }
+        });
 };

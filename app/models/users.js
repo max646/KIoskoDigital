@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     app = require('../app'),
+    config = app.get('config'),
     q = require('q'),
     bcrypt = require('bcrypt-nodejs'),
     Collection = require('./collections').model,
@@ -104,11 +105,13 @@ UserSchema.methods.createCollection = function() {
   var that = this;
   return Collection.create({
     owner: this._id,
-    issues: [app.get('first_issue')]
+    issues: [config.first_issue]
   }, function(err, collection) {
-    console.log(err);
-    that.collections.push(collection._id);
-    that.save();
+        if(err) {
+          console.log(err);
+        }
+        that.collections.push(collection._id);
+        that.save();
   });
 };
 
@@ -199,6 +202,22 @@ UserSchema.methods.findMainCollection = function() {
   });
 
   return defer.promise;
+};
+
+UserSchema.statics.checkUsername = function (username) {
+    var defer = q.defer();
+
+    this.findOne({
+        username: username
+    }, function(err, user) {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(user);
+        }
+    });
+
+    return defer.promise;
 };
 
 var UserModel = null;

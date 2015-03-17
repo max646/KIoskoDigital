@@ -3,6 +3,8 @@
   "mongodb": "mongodb://127.0.0.1/bdigital",
   "base_url": "http://104.236.50.158:3000",
 
+  "first_issue": "53b3791643875a10e359feee",
+
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",

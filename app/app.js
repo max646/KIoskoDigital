@@ -8,9 +8,6 @@ var passport = require('passport');
 
 var app = module.exports = express();
 
-// TODO: Move to db. Use initializers
-app.set('first_issue', '53b3791643875a10e359feee');
-
 app.set('config', require('./config'));
 
 require('./middleware/mercadopago')(app);

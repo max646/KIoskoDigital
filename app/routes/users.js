@@ -1,19 +1,13 @@
 var express = require('express'),
-  usersMw = require('../middleware/users'),
-  isAuthenticated = require('../middleware/auth/authorize'),
-  passport = require('passport');
+    create = require('../middleware/users/create'),
+    check = require('../middleware/users/check'),
+    isAuthenticated = require('../middleware/auth/authorize');
 
 var users = express.Router();
 
-users.post('/', usersMw.create, function(req, res) {
-  res.send({
-    users: [
-      {
-        username: req.body.user.username
-      }
-    ]
-  });
-});
+users.post('/', create);
+
+users.post('/check', check);
 
 users.get('/', isAuthenticated, function(req, res) {
   res.send({
