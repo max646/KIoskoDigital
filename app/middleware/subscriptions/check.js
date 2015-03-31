@@ -21,15 +21,11 @@ module.exports = function(req, res) {
                       platform: payment.platform,
                       status: payment.status,
                       created_at: payment.created_at,
-                      payment_id: payment.payment_id,
-                      preference_id: payment.preference_id,
-                      token: payment.token,
                       description: payment.description,
-                      payer: {
-                          id: payment.payer.id,
-                          email: payment.payer.email,
-                          nickname: payment.payer.nickname
-                      }
+                      type: payment.type,
+                      amount: payment.amount,
+                      discount_amount: payment.discount_amount,
+                      currency: payment.currency
                   }],
                   'users':[{
                       id: req.user._id,

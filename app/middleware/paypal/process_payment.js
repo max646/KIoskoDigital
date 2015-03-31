@@ -20,28 +20,32 @@ var process_payment = function(req, res) {
             res.send(200, {status: 'OK'});
 
             var status = paypal_payment.state;
-            var duration = parseInt(paypal_payment.transactions[0].item_list.items[0].sku); //if duration == 0 is recurrent payment else total months
+            var duration = parseInt(paypal_payment.transactions[0].item_list.items[0].sku); //if duration == 1 is recurrent payment else total months
             var expired_at = new Date();
 
-            if(duration != 0) {
+            if(duration != 1) {
                 expired_at.setMonth(expired_at.getMonth() + duration);
             } else {
                 expired_at.setMonth(expired_at.getMonth() + 1);
             }
 
-            Payment.findOne({'payment_id': req.body.id}, function(error, payment) {
+            Payment.findOne({'platform.paypal.id': req.body.id}, function(error, payment) {
 
                 if (!payment) {
                     payment = new Payment({
-                        payment_id: req.body.id,
-                        platform: 'paypal',
-                        token: req.body.token,
+                        platform: {
+                            paypal: {
+                                id: req.body.id,
+                                token: req.body.token,
+                                status: status,
+                                payer: {
+                                    id: req.body.payer,
+                                    email: paypal_payment.payer.payer_info.email
+                                }
+                            }
+                        },
                         status: status,
-                        description: paypal_payment.transactions[0].description,
-                        payer: {
-                            id: req.body.payer,
-                            email: paypal_payment.payer.payer_info.email
-                        }
+                        description: paypal_payment.transactions[0].description
                     });
 
                     payment.save(function(error, payment){

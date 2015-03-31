@@ -8,6 +8,7 @@ var payments = require('./payments');
 var issues = require('./issues');
 var token = require('./token');
 var payment_methods = require('./payment_methods');
+var vouchers = require('./vouchers');
 
 app.use('/', status);
 app.use('/users', users);
@@ -17,3 +18,4 @@ app.use('/subscriptions', subscriptions);
 app.use('/payments', payments);
 app.use('/token', token);
 app.use('/paymentMethods', payment_methods);
+app.use('/vouchers', vouchers);

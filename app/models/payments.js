@@ -6,22 +6,41 @@ var Subscription = require('./subscriptions').model;
 var Schema = mongoose.Schema;
 
 var PaymentSchema = new Schema({
-    platform: String, // mercadopago or paypal
-    payment_id: String, // payment id -> platform -> mercadopago or paypal
-    preference_id: String, // preference id -> mercadopago
-    token: String, // token -> paypal
+    platform: {
+        mercadopago: {
+            id: String,
+            preference_id: String,
+            preapproval_id: String,
+            status: String,
+            payer: {
+                id: String,
+                email: String,
+                nickname: String
+            }
+        },
+        paypal: {
+            id: String,
+            status: String,
+            payer: {
+                id: String,
+                email: String
+            },
+            token: String
+        }
+    },
     status: String, // payment status
-    type: String, // recurrent or regular
+    type: String, // recurrent, regular or free
     description: String,
     created_at: {
         type: Date,
         default: Date.now
     },
-    payer: {
-        id: String,
-        email: String,
-        nickname: String
-    }
+    amount: Number,
+    discount_amount: {
+        type: Number,
+        default: 0
+    },
+    currency: String
 });
 
 PaymentSchema.methods.findSubscription = function() {

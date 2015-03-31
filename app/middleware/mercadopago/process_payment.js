@@ -2,7 +2,8 @@ var q = require('q');
 var app = require('../../app');
 var mp = app.get('mp');
 
-var MP_CONST = require('../../config/mercadopago');
+var MERCADOPAGO = require('../../config/mercadopago');
+var PAYMENT_TYPES = require('../../config/payment_types');
 
 var Subscription = require('../../models/subscriptions').model;
 var Payment = require('../../models/payments').model;
@@ -24,31 +25,35 @@ var process_regular_payment = function(req, res) {
             res.send(200, {status: 'OK'});
 
             var mp_status = data.response.collection.status;
-            var status = (mp_status != MP_CONST.STATUS.APPROVED ? MP_CONST.STATUS.PENDING : MP_CONST.STATUS.APPROVED);
-            var duration = parseInt(data.response.collection.external_reference); //if duration == 0 is recurrent payment else total months
+            var status = (mp_status != MERCADOPAGO.STATUS.APPROVED ? MERCADOPAGO.STATUS.PENDING : MERCADOPAGO.STATUS.APPROVED);
+            var duration = parseInt(data.response.collection.external_reference); //if duration == 1 is recurrent payment else total months
             var expired_at = new Date();
 
-            if(duration != 0) {
+            if(duration != 1) {
                 expired_at.setMonth(expired_at.getMonth() + duration);
             } else {
                 expired_at.setMonth(expired_at.getMonth() + 1);
             }
 
-            Payment.findOne({'payment_id': req.body.id}, function(error, payment) {
+            Payment.findOne({'platform.mercadopago.id': req.body.id}, function(error, payment) {
 
                 if (!payment) {
                     payment = new Payment({
-                        payment_id: req.body.id,
-                        platform: 'mercadopago',
-                        type: 'regular',
-                        preference_id: req.body.preference,
+                        platform: {
+                            mercadopago: {
+                                id: req.body.id,
+                                preference_id: req.body.preference,
+                                payer: {
+                                    id: data.response.collection.payer.id,
+                                    email: data.response.collection.payer.email,
+                                    nickname: data.response.collection.payer.nickname
+                                },
+                                status: mp_status
+                            }
+                        },
+                        type: PAYMENT_TYPES.REGULAR,
                         status: mp_status,
-                        description: data.response.collection.reason,
-                        payer: {
-                            id: data.response.collection.payer.id,
-                            email: data.response.collection.payer.email,
-                            nickname: data.response.collection.payer.nickname
-                        }
+                        description: data.response.collection.reason
                     });
 
                     payment.save(function(error, payment){
@@ -99,12 +104,12 @@ var process_recurrent_payment = function(req, res) {
 
             var mp_status = data.response.status;
             var status = '';
-            if(mp_status != MP_CONST.STATUS.APPROVED && mp_status != MP_CONST.STATUS.AUTHORIZED) {
-                status = MP_CONST.STATUS.PENDING;
-            } else if(mp_status == MP_CONST.STATUS.APPROVED) {
-                status = MP_CONST.STATUS.APPROVED;
-            } else if(mp_status == MP_CONST.STATUS.AUTHORIZED) {
-                status = MP_CONST.STATUS.AUTHORIZED;
+            if(mp_status != MERCADOPAGO.STATUS.APPROVED && mp_status != MERCADOPAGO.STATUS.AUTHORIZED) {
+                status = MERCADOPAGO.STATUS.PENDING;
+            } else if(mp_status == MERCADOPAGO.STATUS.APPROVED) {
+                status = MERCADOPAGO.STATUS.APPROVED;
+            } else if(mp_status == MERCADOPAGO.STATUS.AUTHORIZED) {
+                status = MERCADOPAGO.STATUS.AUTHORIZED;
             }
             var duration = parseInt(data.response.external_reference); //if duration == 0 is recurrent payment else total months
             var expired_at = new Date();
@@ -115,19 +120,24 @@ var process_recurrent_payment = function(req, res) {
                 expired_at = data.response.auto_recurring.end_date;
             }
 
-            Payment.findOne({'payment_id': req.body.id}, function(error, payment) {
+            Payment.findOne({'platform.mercadopago.id': req.body.id}, function(error, payment) {
 
                 if (!payment) {
                     payment = new Payment({
-                        payment_id: req.body.id,
-                        platform: 'mercadopago',
-                        type: 'recurrent',
+                        platform: {
+                            mercadopago: {
+                                id: req.body.id,
+                                preapproval_id: req.body.id,
+                                payer: {
+                                    id: data.response.payer_id,
+                                    email: data.response.payer_email
+                                },
+                                status: mp_status
+                            }
+                        },
+                        type: PAYMENT_TYPES.RECURRENT,
                         status: mp_status,
-                        description: data.response.reason,
-                        payer: {
-                            id: data.response.payer_id,
-                            email: data.response.payer_email
-                        }
+                        description: data.response.reason
                     });
 
                     payment.save(function(error, payment){

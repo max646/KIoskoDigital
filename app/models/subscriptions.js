@@ -20,8 +20,8 @@ var SubscriptionSchema = new Schema({
     expired_at: Date,
     duration: Number,
     status: String,
-    payment: Schema.Types.ObjectId,
-    history_of_payments: [Schema.Types.ObjectId]
+    payment: Schema.Types.ObjectId, //current payment
+    history_of_payments: [Schema.Types.ObjectId] // history of payments
 });
 
 SubscriptionSchema.methods.findPayment = function() {

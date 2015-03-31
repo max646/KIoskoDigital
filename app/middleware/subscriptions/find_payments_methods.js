@@ -1,8 +1,9 @@
 /**
  Subscriptions Types by id:
- 0 - Recurrent
+ 1 - Recurrent (monthly)
  3 - 3 months
  6 - 6 months
+ 12 - 12 months
  **/
 
 var app = require('../../app');
@@ -10,7 +11,8 @@ var config = app.get('config');
 var mp = app.get('mp');
 var paypal = app.get('paypal');
 
-var subscriptions = require('../../config/subscriptions');
+var SUBSCRIPTION_PLANS = require('../../config/subscription_plans');
+
 var mp_preferences = require('../mercadopago/preferences');
 var pp_preferences = require('../paypal/preferences');
 
@@ -20,7 +22,7 @@ module.exports = function(req, res) {
     var payment_id = req.params.id || 0;
     var options = {};
 
-    options = subscriptions[payment_id];
+    options = SUBSCRIPTION_PLANS[payment_id];
     options.user = req.user;
     options.payment_id = payment_id;
 
@@ -32,7 +34,7 @@ module.exports = function(req, res) {
         }
     };
 
-    if (payment_id === '0') {
+    if (payment_id === '1') {
         //TODO: createPreapprovalPayment contains a bug.
         //mp.createPreapprovalPayment(mp_preferences.recurrent(options), function(err, data) {
         mp.post("/preapproval", mp_preferences.recurrent(options), function(err, data){
