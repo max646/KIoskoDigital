@@ -6,6 +6,7 @@ var q = require('q'),
 
 var PAYMENT_TYPES = require('../../config/payment_types');
 var PROMOTION_TYPES = require('../../config/promotion_types');
+var REDEMPTION_VOUCHER_STATUS = require('../../config/redemption_voucher_status');
 
 module.exports = function(req, res){
     if(!req.body.coupon_code) {
@@ -19,7 +20,7 @@ module.exports = function(req, res){
 
             voucher.getPromotion().then(function (promotion) {
 
-                if (promotion && promotion.promotion_type === PROMOTION_TYPES.SUBSCRIPTION_PLAN) {
+                if (promotion && promotion.isValid() && promotion.isActive() && promotion.promotion_type === PROMOTION_TYPES.SUBSCRIPTION_PLAN) {
 
                     q.when(req.user.findSubscription()).then(function (subscription) {
 
@@ -34,8 +35,8 @@ module.exports = function(req, res){
                                 } else {
                                     RedemptionVoucher.create({
                                         voucher: voucher._id,
-                                        user: req.user._id
-
+                                        user: req.user._id,
+                                        status: REDEMPTION_VOUCHER_STATUS.COMPLETED
                                     }, function (err, redemptionVoucher) {
 
                                         var payment = new Payment({
@@ -70,14 +71,25 @@ module.exports = function(req, res){
                                                 redemptionVoucher.subscription = subscription._id;
                                                 redemptionVoucher.save();
 
+                                                voucher.used_times = voucher.used_times +1;
+                                                voucher.save();
+
                                                 res.send({
-                                                    voucher: {
+                                                    vouchers: [{
                                                         id: voucher._id,
                                                         coupon_code: voucher.coupon_code,
                                                         created_at: voucher.created_at,
                                                         expired_at: voucher.expired_at,
                                                         active: voucher.active
-                                                    },
+                                                    }],
+                                                    'redemptionVouchers':[{
+                                                        user: redemptionVoucher.user,
+                                                        voucher: redemptionVoucher.voucher,
+                                                        created_at: redemptionVoucher.created_at,
+                                                        status: redemptionVoucher.status,
+                                                        subscription: redemptionVoucher.subscription,
+                                                        payment: redemptionVoucher.payment
+                                                    }],
                                                     error: null
                                                 });
                                             });

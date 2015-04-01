@@ -1,0 +1,5 @@
+{
+  "COMPLETED" : "completed",
+  "PENDING": "pending",
+  "PROCESSING": "processing"
+}

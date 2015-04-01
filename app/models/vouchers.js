@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var q = require('q');
 
 var Promotion = require('./promotions').model;
-var RedemptionVoucher = require('./redemption_vouchers').model;
 
 var Schema = mongoose.Schema;
 

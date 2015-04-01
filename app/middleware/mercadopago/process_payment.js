@@ -7,6 +7,9 @@ var PAYMENT_TYPES = require('../../config/payment_types');
 
 var Subscription = require('../../models/subscriptions').model;
 var Payment = require('../../models/payments').model;
+var RedemptionVoucher = require('../../models/redemption_vouchers').model;
+
+var REDEMPTION_VOUCHER_STATUS = require('../../config/redemption_voucher_status');
 
 var process_regular_payment = function(req, res) {
 
@@ -75,6 +78,14 @@ var process_regular_payment = function(req, res) {
                             subscription.history_of_payments.push(payment._id);
 
                             subscription.save();
+
+                            RedemptionVoucher
+                                .findOne({user: req.user._id, status: REDEMPTION_VOUCHER_STATUS.PENDING})
+                                .sort('created_at')
+                                .exec(function(err, redemption_voucher) {
+                                    redemption_voucher.status = REDEMPTION_VOUCHER_STATUS.COMPLETED;
+                                    redemption_voucher.save();
+                                });
                         });
 
                     });
@@ -159,6 +170,14 @@ var process_recurrent_payment = function(req, res) {
                             subscription.history_of_payments.push(payment._id);
 
                             subscription.save();
+
+                            RedemptionVoucher
+                                .findOne({user: req.user._id, status: REDEMPTION_VOUCHER_STATUS.PENDING})
+                                .sort('created_at')
+                                .exec(function(err, redemption_voucher) {
+                                    redemption_voucher.status = REDEMPTION_VOUCHER_STATUS.COMPLETED;
+                                    redemption_voucher.save();
+                                });
                         });
 
                     });

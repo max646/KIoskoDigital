@@ -10,21 +10,30 @@ var RedemptionVouchersSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    modified_at: Date,
     subscription: Schema.Types.ObjectId, // subscription id
-    payment: Schema.Types.ObjectId // payment_id
+    payment: Schema.Types.ObjectId, // payment_id
+    status: String // pending or completed
 });
 
 RedemptionVouchersSchema.statics.checkVoucherRedemption = function(couponCode, userId){
     var defer = q.defer();
+    var self = this;
 
-    this.findOne({ coupon_code: couponCode, user: userId })
-        .exec(function(err, voucherRedemption) {
-            if (err) {
-                defer.reject(err);
-            } else {
-                defer.resolve(voucherRedemption);
-            }
-        });
+    mongoose.model('voucher').findOne({coupon_code: couponCode}, function(err, voucher){
+        if (err) {
+            defer.reject(err);
+        } else {
+            self.findOne({voucher: voucher._id, user: userId})
+                .exec(function (err, voucherRedemption) {
+                    if (err) {
+                        defer.reject(err);
+                    } else {
+                        defer.resolve(voucherRedemption);
+                    }
+                });
+        }
+    });
 
     return defer.promise;
 };

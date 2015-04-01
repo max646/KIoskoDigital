@@ -20,6 +20,17 @@ var PromotionSchema = new Schema({
     }
 });
 
+PromotionSchema.methods.isValid = function() {
+    if(this.expired_at >= Date.now()) {
+        return true;
+    }
+    return false;
+};
+
+PromotionSchema.methods.isActive = function() {
+    return this.active;
+};
+
 var PromotionModel = null;
 
 try {

@@ -37,62 +37,80 @@ module.exports = function(req, res) {
     if (payment_id === '1') {
         //TODO: createPreapprovalPayment contains a bug.
         //mp.createPreapprovalPayment(mp_preferences.recurrent(options), function(err, data) {
-        mp.post("/preapproval", mp_preferences.recurrent(options), function(err, data){
+        mp_preferences.recurrent(options).then(function (mercadopago_preference) {
 
-            if (err) {
-                res.send(400, {error: 'mp recurrent: payment error'});
-            } else {
-                if (config.mercadopago.init_point == "sandbox_init_point") {
-                    payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
+            mp.post("/preapproval", mercadopago_preference, function(err, data){
+
+                if (err) {
+                    res.send(400, {error: 'mp recurrent: payment error'});
                 } else {
-                    payment_response.paymentMethod.mp_payment_link = data.response.init_point;
-                }
+                    if (config.mercadopago.init_point == "sandbox_init_point") {
+                        payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
+                    } else {
+                        payment_response.paymentMethod.mp_payment_link = data.response.init_point;
+                    }
 
-                // agregar aqui el pago recurrente o mensual de paypal
-                res.send(payment_response);
-            }
+                    // agregar aqui el pago recurrente o mensual de paypal
+                    res.send(payment_response);
+                }
+            });
+        })
+        .fail(function(err){
+            res.send(400, err);
         });
 
     } else {
 
-        //create mercadopago payment
-        mp.createPreference(mp_preferences.regular(options), function(err, data) {
+        mp_preferences.regular(options).then(function(mercadopago_preference){
 
-            if (err) {
+            //create mercadopago payment
+            mp.createPreference(mercadopago_preference, function(err, data) {
 
-                res.send(400, {error: 'mp preference: payment error'});
+                if (err) {
 
-            } else {
+                    res.send(400, {error: 'mp preference: payment error'});
 
-                if (config.mercadopago.init_point == "sandbox_init_point") {
-                    payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                 } else {
-                    payment_response.paymentMethod.mp_payment_link = data.response.init_point;
-                }
 
-                //create paypal payment
-                paypal.payment.create(pp_preferences.regular(options), function (error, payment) {
-
-                    if (error) {
-
-                        res.send(400, {error: 'pp regular: payment error'});
-
+                    if (config.mercadopago.init_point == "sandbox_init_point") {
+                        payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                     } else {
+                        payment_response.paymentMethod.mp_payment_link = data.response.init_point;
+                    }
 
-                        if(payment.payer.payment_method === 'paypal') {
+                    pp_preferences.regular(options).then(function(paypal_preference){
 
-                            for(var i=0; i < payment.links.length; i++) {
-                                var link = payment.links[i];
-                                if (link.method === 'REDIRECT') {
-                                    payment_response.paymentMethod.pp_payment_link = link.href;
+                        //create paypal payment
+                        paypal.payment.create(paypal_preference, function (error, payment) {
+
+                            if (error) {
+
+                                res.send(400, {error: 'pp regular: payment error'});
+
+                            } else {
+
+                                if(payment.payer.payment_method === 'paypal') {
+
+                                    for(var i=0; i < payment.links.length; i++) {
+                                        var link = payment.links[i];
+                                        if (link.method === 'REDIRECT') {
+                                            payment_response.paymentMethod.pp_payment_link = link.href;
+                                        }
+                                    }
+
+                                    res.send(payment_response);
                                 }
                             }
-
-                            res.send(payment_response);
-                        }
-                    }
-                });
-            }
+                        });
+                    })
+                    .fail(function(err){
+                        res.send(400, err);
+                    });
+                }
+            });
+        })
+        .fail(function(err){
+            res.send(400, err);
         });
     }
 };
