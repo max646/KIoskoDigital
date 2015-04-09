@@ -1,7 +1,7 @@
 {
   "port": 3000,
   "mongodb": "mongodb://127.0.0.1/bdigital",
-  "base_url": "http://104.236.50.158:3000",
+  "base_url": "http://rd3testing.com.ar:3000",
 
   "first_issue": "53b3791643875a10e359feee",
 
@@ -10,9 +10,9 @@
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
     "init_point": "sandbox_init_point",
     "back_urls": {
-      "success": "http://104.236.50.158:4200/#/subscriptions/subscribe",
-      "pending": "http://104.236.50.158:4200/#/subscriptions/subscribe",
-      "failure": "http://104.236.50.158:4200/#/subscriptions/subscribe"
+      "success": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe",
+      "pending": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe",
+      "failure": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe"
     },
     "auto_return": "approved",
     "recurrent_payment": {
@@ -25,8 +25,8 @@
     "client_secret": "ENiC41oy9Q4rxTh_aSNAXjRNjTosBtfsf0OuKnVaQyX1YnQFj0uvb60JoH7MZj3Gm2y7Yagx0ExMF_9J",
     "mode": "sandbox",
     "redirect_urls": {
-      "return_url": "http://104.236.50.158:4200/#/subscriptions/subscribe",
-      "cancel_url": "http://104.236.50.158:4200/#/subscriptions/options"
+      "return_url": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe",
+      "cancel_url": "http://rd3testing.com.ar:4200/#/subscriptions/options"
     },
     "currency": "USD"
   },
@@ -39,6 +39,6 @@
   "google" : {
     "client_id": "623929730156-1pspb352389ccipijalrctveo7tc4ur9.apps.googleusercontent.com",
     "client_secret": "eFAb4d220nR6BzVO6vmugeJM",
-    "redirectUri": "http://104.236.50.158:4200"
+    "redirectUri": "http://rd3testing.com.ar:4200"
   }
 }
