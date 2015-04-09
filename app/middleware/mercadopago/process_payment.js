@@ -83,8 +83,10 @@ var process_regular_payment = function(req, res) {
                                 .findOne({user: req.user._id, status: REDEMPTION_VOUCHER_STATUS.PENDING})
                                 .sort('created_at')
                                 .exec(function(err, redemption_voucher) {
-                                    redemption_voucher.status = REDEMPTION_VOUCHER_STATUS.COMPLETED;
-                                    redemption_voucher.save();
+                                    if(redemption_voucher) {
+                                        redemption_voucher.status = REDEMPTION_VOUCHER_STATUS.COMPLETED;
+                                        redemption_voucher.save();
+                                    }
                                 });
                         });
 

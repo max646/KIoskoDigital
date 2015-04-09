@@ -25,13 +25,13 @@ module.exports = function(req, res){
                     q.when(req.user.findSubscription()).then(function (subscription) {
 
                         if (subscription && subscription.active) {
-                            res.send(400, {error: 'The coupon code has not been redeemed. You are already subscribed.'});
+                            res.send(400, {error: 'No hemos podido canjear el cupon de descuento. Tu ya te encuentras suscrito.'});
                         } else {
 
                             RedemptionVoucher.checkVoucherRedemption(req.body.coupon_code, req.user._id).then(function (redemptionVoucher) {
 
                                 if (redemptionVoucher) {
-                                    res.send(400, {error: 'You have used this voucher before.'});
+                                    res.send(400, {error: 'Ya has canjeado anteriormente este cupon de descuento.'});
                                 } else {
                                     RedemptionVoucher.create({
                                         voucher: voucher._id,
@@ -79,6 +79,8 @@ module.exports = function(req, res){
                                                         id: voucher._id,
                                                         coupon_code: voucher.coupon_code,
                                                         created_at: voucher.created_at,
+                                                        used_times: voucher.used_times,
+                                                        limit_of_use: voucher.limit_of_use,
                                                         expired_at: voucher.expired_at,
                                                         active: voucher.active
                                                     }],
@@ -109,7 +111,7 @@ module.exports = function(req, res){
                         }
                     });
                 } else {
-                    res.send(400, {error: 'Promotion not valid.'});
+                    res.send(400, {error: 'El cupon de descuento que ingresaste debes canjearlo en la seccion "Suscríbase y sea feliz" luego de seleccionar un plan.'});
                 }
             })
             .fail(function (err) {

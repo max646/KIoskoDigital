@@ -4,7 +4,7 @@ var q = require('q'),
 
 module.exports = function(req, res){
     if(!req.body.coupon_code) {
-        res.send(400, {error: 'Coupon code is empty.'});
+        res.send(400, {error: 'El cupon de descuento es requerido.'});
         return false;
     }
 

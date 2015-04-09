@@ -21,7 +21,8 @@ var SubscriptionSchema = new Schema({
     duration: Number,
     status: String,
     payment: Schema.Types.ObjectId, //current payment
-    history_of_payments: [Schema.Types.ObjectId] // history of payments
+    history_of_payments: [Schema.Types.ObjectId], // history of payments,
+    plan: Number // subscription plans
 });
 
 SubscriptionSchema.methods.findPayment = function() {

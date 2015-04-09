@@ -32,7 +32,7 @@ VoucherSchema.statics.checkCouponCode = function(couponCode){
             if (err) {
                 defer.reject(err);
             } else if (couponCode === null) {
-              defer.reject({message: 'Coupon code is not valid.'});
+              defer.reject({message: 'El código de descuento que has ingresado no es válido.'});
             } else {
                 defer.resolve(couponCode);
             }
