@@ -8,7 +8,7 @@
   "mercadopago": {
     "client_id": "2188622140377325",
     "client_secret": "lxAZrqd6jdHXV9mk9UDvyGSOysCj4o9o",
-    "init_point": "sandbox_init_point",
+    "init_point": "sandbox",
     "back_urls": {
       "success": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe",
       "pending": "http://rd3testing.com.ar:4200/#/subscriptions/subscribe",
