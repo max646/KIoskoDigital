@@ -43,8 +43,10 @@ module.exports = function(req, res) {
 
                 if (err) {
                     res.send(400, {error: 'mp recurrent: payment error'});
+                    console.log(mercadopago_preference);
+                    console.log(err);
                 } else {
-                    if (config.mercadopago.init_point == "sandbox_init_point") {
+                    if (config.mercadopago.init_point == "sandbox") {
                         payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                     } else {
                         payment_response.paymentMethod.mp_payment_link = data.response.init_point;
@@ -57,6 +59,7 @@ module.exports = function(req, res) {
         })
         .fail(function(err){
             res.send(400, err);
+            console.log(err);
         });
 
     } else {
@@ -69,10 +72,12 @@ module.exports = function(req, res) {
                 if (err) {
 
                     res.send(400, {error: 'mp preference: payment error'});
+                    console.log(mercadopago_preference);
+                    console.log(err);
 
                 } else {
 
-                    if (config.mercadopago.init_point == "sandbox_init_point") {
+                    if (config.mercadopago.init_point == "sandbox") {
                         payment_response.paymentMethod.mp_payment_link = data.response.sandbox_init_point;
                     } else {
                         payment_response.paymentMethod.mp_payment_link = data.response.init_point;
@@ -86,6 +91,8 @@ module.exports = function(req, res) {
                             if (error) {
 
                                 res.send(400, {error: 'pp regular: payment error'});
+                                console.log(paypal_preference);
+                                console.log(err);
 
                             } else {
 
@@ -105,12 +112,14 @@ module.exports = function(req, res) {
                     })
                     .fail(function(err){
                         res.send(400, err);
+                        console.log(err);
                     });
                 }
             });
         })
         .fail(function(err){
             res.send(400, err);
+            console.log(err);
         });
     }
 };
