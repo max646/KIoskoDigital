@@ -4,7 +4,6 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var morgan = require('morgan');
-var passport = require('passport');
 
 var app = module.exports = express();
 

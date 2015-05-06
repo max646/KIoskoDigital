@@ -48,8 +48,12 @@ module.exports = {
 
   end: function(token) {
     return new RSVP.Promise(function(resolve, reject) {
-      sesisonModel.findOneAndRemove({access_token: token}, function() {
-        console.log('remove', arguments);
+      sessionModel.findOneAndRemove({access_token: token}, function(err, token) {
+        //console.log('remove', arguments);
+        if(err) {
+          reject(err);
+        }
+        resolve(token);
       });
     });
   }

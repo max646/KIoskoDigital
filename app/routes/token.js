@@ -20,8 +20,9 @@ SessionRoute.post('/', isAuthenticated, function(req, res) {
 });
 
 SessionRoute.delete('/:token', function(req, res) {
-  Session.end(req.params.token);
-  res.send(200);
+  Session.end(req.params.token).then(function(token){
+    res.send(200, token);
+  });
 });
 
 

@@ -7,7 +7,10 @@ var Schema = mongoose.Schema;
 
 var VoucherSchema = new Schema({
     coupon_code: String, //coupon code
-    used_times: Number,
+    used_times: {
+        type: Number,
+        default: 0
+    },
     limit_of_use: Number,
     days_of_validity: Number,
     created_at: {
@@ -35,6 +38,39 @@ VoucherSchema.statics.checkCouponCode = function(couponCode){
               defer.reject({message: 'El código de descuento que has ingresado no es válido.'});
             } else {
                 defer.resolve(couponCode);
+            }
+        });
+
+    return defer.promise;
+};
+
+VoucherSchema.statics.checkAndCreate = function(voucher) {
+    var defer = q.defer();
+
+    this.findOne({ coupon_code: voucher.coupon_code })
+        .exec(function(err, voucher_found) {
+            if (err) {
+                defer.reject(err);
+            } else if (voucher_found === null) {
+                var new_voucher = {
+                    coupon_code: voucher.coupon_code,
+                    limit_of_use: voucher.limit_of_use,
+                    days_of_validity: voucher.days_of_validity,
+                    expired_at: voucher.expired_at
+                };
+                VoucherModel.create(new_voucher, function(err, new_voucher){
+                    if (err) {
+                        defer.reject(err);
+                    } else {
+                        Promotion.findOne({_id: voucher.promotion_id}, function(err, promotion){
+                            promotion.coupons.push(new_voucher._id);
+                            promotion.save();
+                        });
+                        defer.resolve(new_voucher);
+                    }
+                });
+            } else {
+                defer.reject({message: 'El código de descuento que has ingresado ya existe.'});
             }
         });
 

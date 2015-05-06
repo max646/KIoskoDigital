@@ -10,6 +10,7 @@ var token = require('./token');
 var payment_methods = require('./payment_methods');
 var vouchers = require('./vouchers');
 var redemption_vouchers = require('./redemption_vouchers');
+var promotions = require('./promotions');
 
 app.use('/', status);
 app.use('/users', users);
@@ -21,3 +22,4 @@ app.use('/token', token);
 app.use('/paymentMethods', payment_methods);
 app.use('/vouchers', vouchers);
 app.use('/redemptionVouchers', redemption_vouchers);
+app.use('/promotions', promotions);
