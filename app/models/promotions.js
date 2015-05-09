@@ -17,7 +17,13 @@ var PromotionSchema = new Schema({
     active: {
         type: Boolean,
         default: true
-    }
+    },
+    draft: {
+        type: Boolean,
+        default: false
+    },
+    name: String,
+    description: String
 });
 
 PromotionSchema.methods.isValid = function() {
