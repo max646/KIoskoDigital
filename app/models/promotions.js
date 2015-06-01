@@ -8,7 +8,7 @@ var PromotionSchema = new Schema({
     coupon_type: String,
     discount_percentage: Number,
     subscription_plan: Number, // subscription_plan_id if promotion_type value is "subscription_plan"
-    coupons: [Schema.Types.ObjectId], //discount coupons
+    coupons: [Schema.Types.ObjectId], //discount coupons - vouchers
     created_at: {
         type: Date,
         default: Date.now

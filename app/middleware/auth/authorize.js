@@ -5,7 +5,7 @@ var Session = require('../../lib/auth/Session');
 
 passport.use(new BearerStrategy(
   function(token, done) {
-  	console.log(token);
+  	//console.log(token);
   	Session
   	  .getUser(token)
   	  .then(function(user) {

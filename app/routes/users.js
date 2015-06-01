@@ -6,7 +6,6 @@ var express = require('express'),
 var users = express.Router();
 
 users.post('/', create);
-
 users.post('/check', check);
 
 users.get('/', isAuthenticated, function(req, res) {

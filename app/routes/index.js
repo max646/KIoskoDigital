@@ -1,25 +1,41 @@
 var app = require('../app');
 
-var status = require('./status');
-var users = require('./users');
-var collections = require('./collections');
-var subscriptions = require('./subscriptions');
-var payments = require('./payments');
-var issues = require('./issues');
-var token = require('./token');
-var payment_methods = require('./payment_methods');
-var vouchers = require('./vouchers');
-var redemption_vouchers = require('./redemption_vouchers');
-var promotions = require('./promotions');
+var site = {
+    status:                 require('./status'),
+    users:                  require('./users'),
+    collections:            require('./collections'),
+    subscriptions:          require('./subscriptions'),
+    payments:               require('./payments'),
+    issues:                 require('./issues'),
+    token:                  require('./token'),
+    payment_methods:        require('./payment_methods'),
+    vouchers:               require('./vouchers'),
+    redemption_vouchers:    require('./redemption_vouchers')
+};
 
-app.use('/', status);
-app.use('/users', users);
-app.use('/collections', collections);
-app.use('/issues', issues);
-app.use('/subscriptions', subscriptions);
-app.use('/payments', payments);
-app.use('/token', token);
-app.use('/paymentMethods', payment_methods);
-app.use('/vouchers', vouchers);
-app.use('/redemptionVouchers', redemption_vouchers);
-app.use('/promotions', promotions);
+var admin = {
+    promotions:             require('./admin/promotions'),
+    token:                  require('./admin/token'),
+    users:                  require('./admin/users'),
+    vouchers:               require('./admin/vouchers')
+};
+
+
+//Frontend routes
+app.use('/', site.status);
+app.use('/users', site.users);
+app.use('/collections', site.collections);
+app.use('/issues', site.issues);
+app.use('/subscriptions', site.subscriptions);
+app.use('/payments', site.payments);
+app.use('/token', site.token);
+app.use('/paymentMethods', site.payment_methods);
+app.use('/vouchers', site.vouchers);
+app.use('/redemptionVouchers', site.redemption_vouchers);
+
+
+//Backend routes
+app.use('/admin/promotions', admin.promotions);
+app.use('/admin/token', admin.token);
+app.use('/admin/users', admin.users);
+app.use('/admin/vouchers', admin.vouchers);

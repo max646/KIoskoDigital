@@ -28,6 +28,10 @@ var UserSchema = new Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 });
 

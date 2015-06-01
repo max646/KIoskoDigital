@@ -1,14 +1,14 @@
 var q = require('q'),
-    Promotions = require('../../models/promotions').model;
+    Users = require('../../../models/users').model;
 
 module.exports = function(req, res) {
 
-   Promotions.find({}, function(err, promotions){
+   Users.find({}, function(err, users){
        if(err){
            res.send(400, {error: err.message});
        } else {
            res.send({
-               promotions: promotions
+               users: users
            });
        };
     });

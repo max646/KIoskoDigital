@@ -46,6 +46,24 @@ module.exports = {
     });
   },
 
+  getAdminUser: function(token) {
+    return new RSVP.Promise(function(resolve, reject) {
+      sessionModel.findOne({access_token: token})
+          .populate('user')
+          .exec(function(err, token) {
+            if (err) {
+              reject(err)
+            } else {
+              if (token.user && token.user.admin) {
+                resolve(token.user);
+              } else {
+                resolve(null);
+              }
+            }
+          });
+    });
+  },
+
   end: function(token) {
     return new RSVP.Promise(function(resolve, reject) {
       sessionModel.findOneAndRemove({access_token: token}, function(err, token) {

@@ -1,6 +1,6 @@
 var q = require('q'),
-    Promotions = require('../../models/promotions').model;
-    Vouchers = require('../../models/vouchers').model;
+    Promotions = require('../../../models/promotions').model;
+    Vouchers = require('../../../models/vouchers').model;
 
 module.exports = function(req, res) {
 

@@ -1,5 +1,5 @@
 var q = require('q'),
-    Promotions = require('../../models/promotions').model;
+    Promotions = require('../../../models/promotions').model;
 
 module.exports = function(req, res) {
     if(!req.body.promotion || !req.body.promotion._id) {
