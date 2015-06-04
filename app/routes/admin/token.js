@@ -19,7 +19,7 @@ SessionRoute.post('/', isAuthenticated, function(req, res) {
           res.send(500);
         });
   } else {
-    res.send(500);
+    res.send(401);
   }
 });
 

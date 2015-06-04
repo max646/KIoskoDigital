@@ -1,18 +1,19 @@
 var express = require('express');
 var app = require('../../app');
 var voucher = express.Router();
-var is_authenticated = require('../../middleware/admin/auth/authorize');
+var isAuthenticated = require('../../middleware/auth/authorize');
+var isAdmin = require('../../middleware/admin/auth/check');
 
 var detail = require('../../middleware/admin/vouchers/detail');
-var add_voucher = require('../../middleware/admin/vouchers/create');
+var addVoucher = require('../../middleware/admin/vouchers/create');
 var activate = require('../../middleware/admin/vouchers/activate');
 var remove = require('../../middleware/admin/vouchers/delete');
 
-voucher.post('/', is_authenticated, add_voucher);
-voucher.post('/:id/activate', is_authenticated, activate);
+voucher.post('/', isAuthenticated, isAdmin, addVoucher);
+voucher.post('/:id/activate', isAuthenticated, isAdmin, activate);
 
-voucher.get('/:id', is_authenticated, detail);
+voucher.get('/:id', isAuthenticated, isAdmin, detail);
 
-voucher.delete('/:id', is_authenticated, remove);
+voucher.delete('/:id', isAuthenticated, isAdmin, remove);
 
 module.exports = voucher;

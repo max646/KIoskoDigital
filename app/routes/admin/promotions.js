@@ -1,6 +1,7 @@
 var express = require('express');
 var app = require('../../app');
-var isAuthenticated = require('../../middleware/admin/auth/authorize');
+var isAuthenticated = require('../../middleware/auth/authorize');
+var isAdmin = require('../../middleware/admin/auth/check');
 
 var promotions = express.Router();
 
@@ -12,13 +13,13 @@ var activate = require('../../middleware/admin/promotions/activate');
 var edit = require('../../middleware/admin/promotions/edit');
 
 
-promotions.get('/', isAuthenticated, list);
-promotions.get('/:id', isAuthenticated, detail);
+promotions.get('/', isAuthenticated, isAdmin, list);
+promotions.get('/:id', isAuthenticated, isAdmin, detail);
 
-promotions.post('/', isAuthenticated, create);
-promotions.post('/:id/activate', isAuthenticated, activate);
-promotions.post('/:id', isAuthenticated, edit);
+promotions.post('/', isAuthenticated, isAdmin, create);
+promotions.post('/:id/activate', isAuthenticated, isAdmin, activate);
+promotions.post('/:id', isAuthenticated, isAdmin, edit);
 
-promotions.delete('/:id', isAuthenticated, remove);
+promotions.delete('/:id', isAuthenticated, isAdmin, remove);
 
 module.exports = promotions;
