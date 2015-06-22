@@ -13,6 +13,15 @@ var IssueSchema = new Schema({
   main: String,
   publication: Schema.Types.ObjectId,
   published_on: {type: Date, default: Date.now},
+  modified_at: Date,
+  active: {
+    type: Boolean,
+    default: true
+  },
+  draft: {
+    type: Boolean,
+    default: false
+  },
   pages: [Pages]
 });
 

@@ -17,7 +17,8 @@ var admin = {
     promotions:             require('./admin/promotions'),
     token:                  require('./admin/token'),
     users:                  require('./admin/users'),
-    vouchers:               require('./admin/vouchers')
+    vouchers:               require('./admin/vouchers'),
+    issues:               require('./admin/issues')
 };
 
 
@@ -39,3 +40,4 @@ app.use('/admin/promotions', admin.promotions);
 app.use('/admin/token', admin.token);
 app.use('/admin/users', admin.users);
 app.use('/admin/vouchers', admin.vouchers);
+app.use('/admin/issues', admin.issues);

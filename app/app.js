@@ -4,6 +4,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var morgan = require('morgan');
+var path = require("path");
 
 var app = module.exports = express();
 
@@ -19,6 +20,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+
+app.use('/public', express.static('public'));
 
 app.use(function(req, res, next) {
   res.set('Content-Type', 'application/json');
