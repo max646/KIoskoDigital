@@ -25,7 +25,7 @@ module.exports = function(req, res) {
                     } else {
                         var publicDir = "/public/uploads/issues/issue_" + issue._id;
                         var fullsizePath = path.join(__dirname, "../../../.." + publicDir + '/fullsize/');
-                        var thumbsPath = path.join(__dirname, "../../../../public/uploads/issues/issue_" + issue.number + '/thumbs/');
+                        var thumbsPath = path.join(__dirname, "../../../.." + publicDir + '/thumbs/');
 
                         mkdirp(fullsizePath, function (err) {
                             if (err) {
