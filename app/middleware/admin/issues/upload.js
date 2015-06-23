@@ -57,6 +57,10 @@ module.exports = function(req, res) {
                                                     }
                                                 });
 
+                                            if(req.body.title)
+                                                issue.title = req.body.title;
+                                            if(req.body.number)
+                                                issue.number = req.body.number;
                                             issue.main = config.base_url + publicDir + '/fullsize/';
                                             issue.pages.push({file: imageName});
                                             issue.save(function(err, issue) {

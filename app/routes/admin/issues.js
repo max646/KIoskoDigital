@@ -11,6 +11,7 @@ var remove = require('../../middleware/admin/issues/delete');
 var activate = require('../../middleware/admin/issues/activate');
 var detail = require('../../middleware/admin/issues/detail');
 var upload = require('../../middleware/admin/issues/upload');
+var edit = require('../../middleware/admin/issues/edit');
 
 issues.get('/', isAuthenticated, isAdmin, list);
 issues.get('/:id', isAuthenticated, isAdmin, detail);
@@ -18,6 +19,7 @@ issues.get('/:id', isAuthenticated, isAdmin, detail);
 issues.post('/', isAuthenticated, isAdmin, create);
 issues.post('/:id/activate', isAuthenticated, isAdmin, activate);
 issues.post('/:id/upload', multiparty(), isAuthenticated, isAdmin, upload);
+issues.post('/:id', isAuthenticated, isAdmin, edit);
 
 issues.delete('/:id', isAuthenticated, isAdmin, remove);
 
