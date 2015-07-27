@@ -36,7 +36,7 @@ module.exports = {
           if (err) {
             reject(err)
           } else {
-            if (token.user) {
+            if (token !== null && token.user) {
               resolve(token.user); 
             } else {
               resolve(null);
